@@ -30,7 +30,7 @@ export const update = async (input: Genre) => {
   const result = await sql.query(
     `EXEC dbo.usp_Update_Genre ${input.id}, ${input.name}`
   );
-  return result.recordset;
+  return result.recordset[0];
 };
 
 export const remove = async (input: Genre) => {

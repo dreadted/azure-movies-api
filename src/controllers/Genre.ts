@@ -1,16 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import * as Genre from "../models/Genre";
 
-export const hello: RequestHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  // res.send("Hello from Genre!");
-  // next({ status: 404, message: "Oops!" });
-  next(Error("Hoppsan!"));
-};
-
 export const create: RequestHandler = async (
   req: Request,
   res: Response,
@@ -20,8 +10,8 @@ export const create: RequestHandler = async (
     const input = req.body;
     const data = await Genre.create(input);
     res.status(201).json({ ...data });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
   next();
 };
@@ -36,10 +26,10 @@ export const readOne: RequestHandler = async (
     if (id) {
       const data = await Genre.readOne({ id });
       if (data) res.status(200).json({ ...data });
-      else next({ status: 404, message: `Genre with id ${id} not found.` });
+      else next({ status: 404, message: `Genre with id [${id}] not found.` });
     }
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
   next();
 };
@@ -53,8 +43,8 @@ export const readAll = async (
     const data = await Genre.readAll();
     if (data && data.length) res.status(200).json(data);
     else next({ status: 404, message: "No genres found." });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
   next();
 };
@@ -65,14 +55,14 @@ export const update: RequestHandler = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     const input = req.body;
 
-    const data = await Genre.update(input);
+    const data = await Genre.update({ id, name: input.name });
     if (data) res.status(200).json({ ...data });
-    else next({ status: 404, message: `Category with id ${id} not found.` });
-  } catch (error) {
-    next(error);
+    else next({ status: 404, message: `Category with id [${id}] not found.` });
+  } catch (err) {
+    next(err);
   }
   next();
 };
@@ -87,10 +77,10 @@ export const remove = async (
     if (!id) next({ status: 400, message: "ID is blank!" });
     const removed = await Genre.remove({ id });
 
-    if (removed.id) res.status(200).json({ id });
-    else next(Error("No category deleted."));
-  } catch (error) {
-    next(error);
+    if (removed && removed.id) res.status(200).json({ id });
+    else next({ status: 404, message: `Category with id [${id}] not found.` });
+  } catch (err) {
+    next(err);
   }
   next();
 };
