@@ -1,0 +1,32 @@
+{
+  "name": "azure-films-api",
+  "version": "0.0.0",
+  "description": "My first Azure REST API",
+  "main": "build/index.js",
+  "scripts": {
+    "start:build": "tsc -w",
+    "start:run": "nodemon build/index.js",
+    "start": "concurrently npm:start:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dreadnallen/azure-films-api.git"
+  },
+  "author": "Christofer Laurin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dreadnallen/azure-films-api/issues"
+  },
+  "homepage": "https://github.com/dreadnallen/azure-films-api#readme",
+  "dependencies": {
+    "@types/connect-slashes": "0.0.32",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.2",
+    "concurrently": "^5.2.0",
+    "connect-slashes": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.3"
+  },
+  "devDependencies": {}
+}
