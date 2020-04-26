@@ -13,7 +13,8 @@ app.use(slashes());
 app.use("/api/v1", router);
 
 router.get("/", (req: Request, res: Response) => {
-  res.send("<h1>Tjosan!</h1>");
+  res.send("<h1>Hoppsan!</h1>");
 });
 
-app.listen(3000, () => console.log("Listening on port 3000"));
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Running on port ${port}`));
