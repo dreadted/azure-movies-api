@@ -1,7 +1,8 @@
 import express, { Request, Response } from "express";
-
 import cors from "cors";
 import slashes from "connect-slashes";
+
+import routes from "./routes";
 
 const app = express();
 const router = express.Router();
@@ -12,9 +13,7 @@ app.use(cors());
 app.use(slashes());
 app.use("/api/v1", router);
 
-router.get("/", (req: Request, res: Response) => {
-  res.send("<h1>Hoppsan!</h1>");
-});
+router.use("/genres", routes.genres);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Running on port ${port}`));
