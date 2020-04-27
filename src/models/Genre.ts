@@ -6,22 +6,22 @@ export type Genre = {
 };
 
 export const create = async (input: Genre) => {
-  const data = await db.create("Genre", { genreName: input.name });
+  const data = await db.run("Genre", "Create", { genreName: input.name });
   return data;
 };
 
 export const readOne = async (input: Genre) => {
-  const data = await db.read("Genre", { id: input.id });
+  const data = await db.run("Genre", "Read", { genreId: input.id });
   return data;
 };
 
 export const readAll = async () => {
-  const data = await db.read("Genre");
+  const data = await db.run("Genre", "Read");
   return data;
 };
 
 export const update = async (input: Genre) => {
-  const data = await db.update("Genre", {
+  const data = await db.run("Genre", "Update", {
     genreId: input.id,
     genreName: input.name
   });
@@ -29,6 +29,6 @@ export const update = async (input: Genre) => {
 };
 
 export const remove = async (input: Genre) => {
-  const data = await db.remove("Genre", { id: input.id });
+  const data = await db.run("Genre", "Delete", { genreId: input.id });
   return data;
 };

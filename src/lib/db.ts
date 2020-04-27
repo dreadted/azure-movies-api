@@ -27,55 +27,20 @@ const convertKeys = (record: any, converter: Converter) => {
   }
 };
 
-export const create = async (model: string, params: any) => {
-  const pool = await sql.connect(config);
-  const sqlParams: any = convertKeys(params, pascalCase);
-  const request = pool.request();
-
-  for (const key in sqlParams) {
-    request.input(key, sqlParams[key]);
-  }
-
-  const result = await request.execute(`dbo.usp_Create_${model}`);
-  return convertKeys(result.recordset[0], kebabCase);
-};
-
-export const read = async (model: string, params?: any) => {
+export const run = async (model: string, procedure: string, params?: any) => {
   const pool = await sql.connect(config);
 
-  if (params && params.id) {
-    const result = await pool
-      .request()
-      .input(`${model}Id`, sql.Int, params.id)
-      .execute(`dbo.usp_Read_${model}`);
+  if (params) {
+    const sqlParams: any = convertKeys(params, pascalCase);
+    const request = pool.request();
+
+    for (const key in sqlParams) {
+      request.input(key, sqlParams[key]);
+    }
+
+    const result = await request.execute(`dbo.usp_${procedure}_${model}`);
     return convertKeys(result.recordset[0], kebabCase);
   }
-
   const result = await pool.request().execute(`dbo.usp_Read_${model}`);
   return result.recordset.map((record: any) => convertKeys(record, kebabCase));
-};
-
-export const update = async (model: string, params: any) => {
-  const pool = await sql.connect(config);
-  const sqlParams: any = convertKeys(params, pascalCase);
-  const request = pool.request();
-
-  for (const key in sqlParams) {
-    request.input(key, sqlParams[key]);
-  }
-
-  const result = await request.execute(`dbo.usp_Update_${model}`);
-  return convertKeys(result.recordset[0], kebabCase);
-};
-
-export const remove = async (model: string, params: any) => {
-  const pool = await sql.connect(config);
-  if (params && params.id) {
-    const result = await pool
-      .request()
-      .input(`${model}Id`, sql.Int, params.id)
-      .execute(`dbo.usp_Delete_${model}`);
-    return convertKeys(result.recordset[0], kebabCase);
-  }
-  return undefined;
 };
