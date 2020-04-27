@@ -77,7 +77,7 @@ export const remove = async (
     if (!id) next({ status: 400, message: "ID is blank!" });
     const removed = await Genre.remove({ id });
 
-    if (removed && removed.id) res.status(200).json({ id });
+    if (removed) res.status(200).json({ ...removed });
     else next({ status: 404, message: `Genre with id [${id}] not found.` });
   } catch (err) {
     next(err);
