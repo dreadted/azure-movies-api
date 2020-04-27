@@ -10,7 +10,7 @@ const router = express.Router();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(slashes());
+app.use(slashes(false));
 app.use("/api/v1", router);
 
 router.use("/genres", routes.genres);

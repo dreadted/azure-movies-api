@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import * as Genre from "../models/Genre";
+import { addHATEOASLinks } from "../lib/utils";
 
 export const create: RequestHandler = async (
   req: Request,
@@ -23,9 +24,10 @@ export const readOne: RequestHandler = async (
 ): Promise<void> => {
   try {
     const id = parseInt(req.params.id);
+    const url = req.originalUrl.slice(0, req.originalUrl.lastIndexOf("/"));
     if (id) {
       const data = await Genre.readOne({ id });
-      if (data) res.status(200).json({ ...data });
+      if (data) res.status(200).json(addHATEOASLinks(data, url));
       else next({ status: 404, message: `Genre with id [${id}] not found.` });
     }
   } catch (err) {
@@ -41,7 +43,12 @@ export const readAll = async (
 ): Promise<void> => {
   try {
     const data = await Genre.readAll();
-    if (data && data.length) res.status(200).json(data);
+    if (data && data.length)
+      res
+        .status(200)
+        .json(
+          data.map((record: any) => addHATEOASLinks(record, req.originalUrl))
+        );
     else next({ status: 404, message: "No genres found." });
   } catch (err) {
     next(err);
