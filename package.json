@@ -30,6 +30,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-validator": "^6.4.0",
     "mssql": "^6.2.0",
     "nodemon": "^2.0.3",
     "tedious": "^8.3.0"
