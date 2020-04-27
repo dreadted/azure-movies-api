@@ -1,5 +1,5 @@
 {
-  "name": "azure-films-api",
+  "name": "azure-movies-api",
   "version": "0.0.0",
   "description": "My first Azure REST API",
   "main": "build/index.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dreadnallen/azure-films-api.git"
+    "url": "git+https://github.com/dreadnallen/azure-movies-api.git"
   },
   "author": "Christofer Laurin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dreadnallen/azure-films-api/issues"
+    "url": "https://github.com/dreadnallen/azure-movies-api/issues"
   },
-  "homepage": "https://github.com/dreadnallen/azure-films-api#readme",
+  "homepage": "https://github.com/dreadnallen/azure-movies-api#readme",
   "dependencies": {
     "@types/connect-slashes": "0.0.32",
     "@types/cors": "^2.8.6",
