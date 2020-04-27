@@ -1,6 +1,7 @@
 // import * as sql from "mssql";
 const sql = require("mssql");
 import config from "../lib/config";
+import * as db from "../lib/db";
 
 export type Genre = {
   id?: number;
@@ -14,15 +15,13 @@ export const create = async (input: Genre) => {
 };
 
 export const readOne = async (input: Genre) => {
-  await sql.connect(config);
-  const result = await sql.query(`EXEC dbo.usp_Read_Genre ${input.id}`);
-  return result.recordset[0];
+  const data = await db.read("Genre", { id: input.id });
+  return data;
 };
 
 export const readAll = async () => {
-  await sql.connect(config);
-  const result = await sql.query("EXEC dbo.usp_Read_Genre");
-  return result.recordset;
+  const data = await db.read("Genre");
+  return data;
 };
 
 export const update = async (input: Genre) => {

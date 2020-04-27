@@ -60,7 +60,7 @@ export const update: RequestHandler = async (
 
     const data = await Genre.update({ id, name: input.name });
     if (data) res.status(200).json({ ...data });
-    else next({ status: 404, message: `Category with id [${id}] not found.` });
+    else next({ status: 404, message: `Genre with id [${id}] not found.` });
   } catch (err) {
     next(err);
   }
@@ -78,7 +78,7 @@ export const remove = async (
     const removed = await Genre.remove({ id });
 
     if (removed && removed.id) res.status(200).json({ id });
-    else next({ status: 404, message: `Category with id [${id}] not found.` });
+    else next({ status: 404, message: `Genre with id [${id}] not found.` });
   } catch (err) {
     next(err);
   }
