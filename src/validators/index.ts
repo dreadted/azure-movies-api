@@ -18,10 +18,10 @@ export const validateId = [
   })
 ];
 
-export const validateName = [check("name").not().isEmpty()];
+export const validateName = (field: string) => [check(field).not().isEmpty()];
 
-export const sanitizeName = [
-  body("name")
+export const sanitizeName = (field: string) => [
+  body(field)
     .not()
     .isEmpty()
     .trim()

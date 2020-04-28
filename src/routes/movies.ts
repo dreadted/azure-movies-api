@@ -12,7 +12,7 @@ const router = Router();
 
 router.post(
   "/",
-  validateName,
+  validateName("name"),
   validateMovie,
   validationResponse,
   Movie.create,
@@ -26,7 +26,7 @@ router.get("/", Movie.readAll, errorHandler);
 router.put(
   "/:id([0-9]+)",
   validateId,
-  validateName,
+  validateName("name"),
   validateMovie,
   validationResponse,
   Movie.update,

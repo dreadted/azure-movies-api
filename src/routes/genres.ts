@@ -12,8 +12,8 @@ const router = Router();
 
 router.post(
   "/",
-  validateName,
-  sanitizeName,
+  validateName("name"),
+  sanitizeName("name"),
   validationResponse,
   Genre.create,
   errorHandler
@@ -26,8 +26,8 @@ router.get("/", Genre.readAll, errorHandler);
 router.put(
   "/:id([0-9]+)",
   validateGenreId,
-  validateName,
-  sanitizeName,
+  validateName("name"),
+  sanitizeName("name"),
   validationResponse,
   Genre.update,
   errorHandler
