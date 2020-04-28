@@ -6,7 +6,6 @@ import { capitalize } from "../lib/utils";
 
 export { validateGenreId } from "./Genre";
 export { validateMovieId, validateMovie } from "./Movie";
-// export { validateOrderId, validateOrder, validateOrderRows } from "./Order";
 
 export const validateId = [
   body("id").not().isEmpty().bail(),
