@@ -14,6 +14,7 @@ app.use(slashes(false));
 app.use("/api/v1", router);
 
 router.use("/genres", routes.genres);
+router.use("/movies", routes.movies);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Running on port ${port}`));

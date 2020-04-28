@@ -5,7 +5,7 @@ import { check, body, param, validationResult } from "express-validator";
 import { capitalize } from "../lib/utils";
 
 export { validateGenreId } from "./Genre";
-// export { validateProductId, validateProduct } from "./Product";
+export { validateMovieId, validateMovie } from "./Movie";
 // export { validateOrderId, validateOrder, validateOrderRows } from "./Order";
 
 export const validateId = [

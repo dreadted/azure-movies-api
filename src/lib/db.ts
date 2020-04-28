@@ -31,22 +31,26 @@ const convertKeys = (record: any, converter: Converter, model?: string) => {
   }
 };
 
-export const run = async (model: string, procedure: string, params?: any) => {
+export const exec = async (
+  model: string,
+  procedure: string,
+  params?: any,
+  getCollection?: boolean
+) => {
   const pool = await sql.connect(config);
+  const request = pool.request();
 
   if (params) {
     const sqlParams: any = convertKeys(params, pascalCase);
-    const request = pool.request();
 
     for (const key in sqlParams) {
       request.input(key, sqlParams[key]);
     }
-
-    const result = await request.execute(`dbo.usp_${procedure}_${model}`);
-    return convertKeys(result.recordset[0], kebabCase, model);
   }
-  const result = await pool.request().execute(`dbo.usp_Read_${model}`);
-  return result.recordset.map((record: any) =>
-    convertKeys(record, kebabCase, model)
-  );
+  const result = await request.execute(`dbo.usp_${procedure}_${model}`);
+  if (getCollection)
+    return result.recordset.map((record: any) =>
+      convertKeys(record, kebabCase, model)
+    );
+  return convertKeys(result.recordset[0], kebabCase, model);
 };

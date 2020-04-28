@@ -2,7 +2,6 @@ import { Router } from "express";
 import * as Genre from "../controllers/Genre";
 import {
   validateName,
-  validateId,
   sanitizeName,
   validationResponse,
   validateGenreId
