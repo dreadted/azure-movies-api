@@ -10,10 +10,12 @@ export type Movie = {
   "movie-genre"?: Genre[];
 };
 
+type MovieGenre = { id: number; name: string };
+
 // TODO: Error handling!
 const addMovieGenres = async (movieId: number, genres: Genre[]) => {
   for (let i = 0; i < genres.length; i++) {
-    await db.exec("MovieGenre", "Create", {
+    await db.exec<MovieGenre>("MovieGenre", "Create", {
       movieId,
       genreId: genres[i].id
     });
@@ -27,7 +29,7 @@ const convertGenreKeys = (genres: Genre[]) => {
 };
 
 export const create = async (input: Movie) => {
-  const data = await db.exec("Movie", "Create", {
+  const data = await db.exec<Movie>("Movie", "Create", {
     MovieName: input.name,
     MovieDescription: input.description,
     ImageURL: input["image-url"],
@@ -35,10 +37,10 @@ export const create = async (input: Movie) => {
   });
   const inputGenres: Genre[] = input["movie-genre"] ? input["movie-genre"] : [];
 
-  if (data && inputGenres && inputGenres.length) {
+  if (data && data.id && inputGenres && inputGenres.length) {
     await addMovieGenres(data.id, inputGenres);
 
-    const outputGenres = await db.exec(
+    const outputGenres = await db.exec<MovieGenre[]>(
       "MovieGenre",
       "Read",
       { movieId: data.id },
@@ -51,8 +53,8 @@ export const create = async (input: Movie) => {
 };
 
 export const readOne = async (input: Movie) => {
-  const data = await db.exec("Movie", "Read", { MovieId: input.id });
-  const genres = await db.exec(
+  const data = await db.exec<Movie>("Movie", "Read", { MovieId: input.id });
+  const genres = await db.exec<MovieGenre[]>(
     "MovieGenre",
     "Read",
     { MovieId: input.id },
@@ -66,9 +68,14 @@ export const readOne = async (input: Movie) => {
 };
 
 export const readAll = async () => {
-  const data = await db.exec("Movie", "Read", undefined, true);
+  const data = await db.exec<Movie[]>("Movie", "Read", undefined, true);
   if (data && data.length) {
-    const genres = await db.exec("MovieGenre", "Read", undefined, true);
+    const genres = await db.exec<MovieGenre[]>(
+      "MovieGenre",
+      "Read",
+      undefined,
+      true
+    );
     if (genres && genres.length) {
       data.forEach(
         (movie: Movie) =>
@@ -85,7 +92,7 @@ export const readAll = async () => {
 };
 
 export const update = async (input: Movie) => {
-  const data = await db.exec("Movie", "Update", {
+  const data = await db.exec<Movie>("Movie", "Update", {
     movieId: input.id,
     movieName: input.name,
     movieDescription: input.description,
@@ -93,8 +100,8 @@ export const update = async (input: Movie) => {
     productionYear: input["production-year"]
   });
 
-  if (data) {
-    await db.exec("MovieGenre", "Delete", { movieId: data.id });
+  if (data && data.id) {
+    await db.exec<MovieGenre>("MovieGenre", "Delete", { movieId: data.id });
     const inputGenres: Genre[] = input["movie-genre"]
       ? input["movie-genre"]
       : [];
@@ -102,7 +109,7 @@ export const update = async (input: Movie) => {
     if (inputGenres && inputGenres.length) {
       await addMovieGenres(data.id, inputGenres);
 
-      const outputGenres = await db.exec(
+      const outputGenres = await db.exec<MovieGenre[]>(
         "MovieGenre",
         "Read",
         { movieId: data.id },
@@ -116,6 +123,6 @@ export const update = async (input: Movie) => {
 };
 
 export const remove = async (input: Movie) => {
-  const data = await db.exec("Movie", "Delete", { MovieId: input.id });
+  const data = await db.exec<Movie>("Movie", "Delete", { movieId: input.id });
   return data;
 };

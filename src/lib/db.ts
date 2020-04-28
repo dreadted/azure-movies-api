@@ -31,7 +31,7 @@ const convertKeys = (record: any, converter: Converter, model?: string) => {
   }
 };
 
-export const exec = async (
+export const exec = async <T extends {}>(
   model: string,
   procedure: string,
   params?: any,
@@ -48,9 +48,10 @@ export const exec = async (
     }
   }
   const result = await request.execute(`dbo.usp_${procedure}_${model}`);
+  // TODO: Try to identify if T is array type
   if (getCollection)
     return result.recordset.map((record: any) =>
       convertKeys(record, kebabCase, model)
-    );
-  return convertKeys(result.recordset[0], kebabCase, model);
+    ) as T;
+  return convertKeys(result.recordset[0], kebabCase, model) as T;
 };

@@ -33,6 +33,6 @@ router.put(
   errorHandler
 );
 
-router.delete("/:id([0-9]+)", validationResponse, Movie.remove, errorHandler);
+router.delete("/:id([0-9]+)", Movie.remove, errorHandler);
 
 export default router;
