@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import slashes from "connect-slashes";
+import config from "./lib/config";
 
 import routes from "./routes";
 
@@ -13,7 +14,7 @@ app.use(cors());
 app.use(slashes(false));
 
 app.use("/test", (req: Request, res: Response) => {
-  res.send("Test!");
+  res.send("Test!" + JSON.stringify(config));
 });
 
 app.use("/api/v1", router);
