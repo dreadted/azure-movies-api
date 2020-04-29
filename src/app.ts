@@ -14,7 +14,7 @@ app.use(cors());
 app.use(slashes(false));
 
 app.use("/test", (req: Request, res: Response) => {
-  res.send("Test!" + JSON.stringify(config));
+  res.send("What?" + JSON.stringify(config));
 });
 
 app.use("/api/v1", router);
