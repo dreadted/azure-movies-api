@@ -3,12 +3,8 @@
   "version": "0.0.0",
   "description": "My first Azure REST API",
   "main": "build/server.js",
-  "engines": {
-    "node": "12.15.0",
-    "npm": "6.9.0"
-  },
   "scripts": {
-    "start": "node build/server.js",
+    "start": "node server.js",
     "serve": "node build/server.js",
     "dev:build": "tsc -w",
     "dev:run": "nodemon -r dotenv/config build/server.js",
