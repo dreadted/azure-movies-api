@@ -51,7 +51,8 @@ export const readAll = async (
 ): Promise<void> => {
   try {
     const actorId = parseInt(req.params.actorId);
-    const data = await Role.readAll({ actorId });
+    const movieId = parseInt(req.params.movieId);
+    const data = await Role.readAll({ movieId, actorId });
     if (data && data.length)
       res.status(200).json(
         data.map((record: any) =>
