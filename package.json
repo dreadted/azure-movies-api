@@ -4,9 +4,11 @@
   "description": "My first Azure REST API",
   "main": "build/index.js",
   "scripts": {
-    "start:build": "tsc -w",
-    "start:run": "nodemon -r dotenv/config build/index.js",
-    "start": "concurrently npm:start:*",
+    "start": "npm run serve",
+    "serve": "node build/index.js",
+    "watch:build": "tsc -w",
+    "watch:run": "nodemon -r dotenv/config build/index.js",
+    "watch": "concurrently npm:watch:*",
     "postinstall": "tsc"
   },
   "repository": {
