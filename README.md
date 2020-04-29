@@ -39,17 +39,17 @@ npm run dev
 
 3. Open your new App Service tree structure by clicking &rsaquo; and got to Deployments / Connect to a GitHub Repository...
 
-- Choose organization (Your username on GitHub)
-- Choose repository (Must be public?)
-  _TODO: Insert solution to this question! There might be an answer in [this Microsoft tutorial](https://docs.microsoft.com/sv-se/azure/javascript/tutorial-vscode-azure-app-service-node-01?tabs=bash). For now &ndash; let's jump over to Azure Portal instead:_
+   - Choose organization (Your username on GitHub)
+   - Choose repository (Must be public?)
+     _TODO: Insert solution to this question! There might be an answer in [this Microsoft tutorial](https://docs.microsoft.com/sv-se/azure/javascript/tutorial-vscode-azure-app-service-node-01?tabs=bash). For now &ndash; let's jump over to Azure Portal instead:_
 
 4. Go to [Azure Portal](https://portal.azure.com/) and click "App Services" to find your new App Service:
 
-- Click "Deployment Center" under "Deployment", choose "GitHub" under "Continous Deployment" and click "Authorize"
-- Log in to your GitHub account and press "Continue"
-- Click "App Service Build Service" and click "Continue"
-- Choose organization (your GitHub profile name), Repository and master branch
-- Click "Countinue" and "Finish". Automatic deployment is now activated.
+   - Click _Deployment Center_ under _Deployment_, choose _GitHub_ under _Continous Deployment_ and click _Authorize_
+   - Log in to your GitHub account and click _Continue_
+   - Click _App Service Build Service_ and click _Continue_
+   - Choose organization (your GitHub profile name), Repository and master branch
+   - Click _Countinue_ and _Finish_. Automatic deployment is now activated.
 
 5. Change your `package.json` setting to:
 
