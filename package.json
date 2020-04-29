@@ -8,8 +8,7 @@
     "serve": "node build/server.js",
     "dev:build": "tsc -w",
     "dev:run": "nodemon -r dotenv/config build/server.js",
-    "dev": "concurrently npm:dev:*",
-    "postinstall": "tsc"
+    "dev": "concurrently npm:dev:*"
   },
   "repository": {
     "type": "git",
