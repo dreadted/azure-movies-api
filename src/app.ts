@@ -13,10 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(slashes(false));
 
-app.use("/test", (req: Request, res: Response) => {
-  res.send("What?" + JSON.stringify(config));
-});
-
 app.use("/api/v1", router);
 
 router.use("/movies", routes.movies);
