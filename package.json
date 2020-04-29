@@ -6,7 +6,8 @@
   "scripts": {
     "start:build": "tsc -w",
     "start:run": "nodemon -r dotenv/config build/index.js",
-    "start": "concurrently npm:start:*"
+    "start": "concurrently npm:start:*",
+    "postinstall": "tsc"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,8 @@
     "express-validator": "^6.4.0",
     "mssql": "^6.2.0",
     "nodemon": "^2.0.3",
-    "tedious": "^8.3.0"
+    "tedious": "^8.3.0",
+    "typescript": "^3.8.3"
   },
   "devDependencies": {},
   "nodemonConfig": {
