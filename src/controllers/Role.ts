@@ -68,7 +68,10 @@ export const readAll = async (
             {
               _rel: "actor",
               type: "GET",
-              href: `${parentURL(req.headers.host + req.originalUrl, 0)}`
+              href: `${parentURL(
+                req.headers.host + req.originalUrl,
+                2
+              )}/actors/${record["actor-id"]}`
             }
           ])
         )
