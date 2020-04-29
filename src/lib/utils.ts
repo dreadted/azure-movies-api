@@ -8,10 +8,19 @@ export type Hateoas = {
   href: string;
 };
 
+const PROTOCOL = process.env.PROTOCOL + "://" || "https://";
+
 export const addHATEOASLinks = (record: any, url: string, more?: Hateoas[]) => {
   const links: Hateoas[] = [];
-  if (more) return { ...record, _links: [...links, ...more] };
-  links.push({ _rel: "self", type: "GET", href: `${url}/${record.id}` });
+  if (more) {
+    more.forEach(hateoas => (hateoas.href = PROTOCOL + hateoas.href));
+    return { ...record, _links: [...links, ...more] };
+  }
+  links.push({
+    _rel: "self",
+    type: "GET",
+    href: `${PROTOCOL + url}/${record.id}`
+  });
   return { ...record, _links: links };
 };
 

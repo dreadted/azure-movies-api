@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import * as Movie from "../models/Movie";
-import { addHATEOASLinks } from "../lib/utils";
+import { addHATEOASLinks, parentURL } from "../lib/utils";
 
 export const create: RequestHandler = async (
   req: Request,
@@ -24,7 +24,7 @@ export const readOne: RequestHandler = async (
 ): Promise<void> => {
   try {
     const id = parseInt(req.params.id);
-    const url = req.originalUrl.slice(0, req.originalUrl.lastIndexOf("/"));
+    const url = parentURL(`${req.headers.host + req.originalUrl}`, 0);
     if (id) {
       const data = await Movie.readOne({ id });
       if (data) res.status(200).json(addHATEOASLinks(data, url));
@@ -47,7 +47,9 @@ export const readAll = async (
       res
         .status(200)
         .json(
-          data.map((record: any) => addHATEOASLinks(record, req.originalUrl))
+          data.map((record: any) =>
+            addHATEOASLinks(record, req.headers.host + req.originalUrl)
+          )
         );
     else next({ status: 404, message: "No Movies found." });
   } catch (err) {

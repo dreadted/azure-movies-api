@@ -33,7 +33,9 @@ export const readOne = async (
       res
         .status(200)
         .json(
-          data.map((record: any) => addHATEOASLinks(record, req.originalUrl))
+          data.map((record: any) =>
+            addHATEOASLinks(record, req.headers.host + req.originalUrl)
+          )
         );
     else next({ status: 404, message: "No genres found." });
   } catch (err) {
@@ -53,18 +55,19 @@ export const readAll = async (
     if (data && data.length)
       res.status(200).json(
         data.map((record: any) =>
-          addHATEOASLinks(record, req.originalUrl, [
+          addHATEOASLinks(record, req.headers.host + req.originalUrl, [
             {
               _rel: "movie",
               type: "GET",
-              href: `${parentURL(req.originalUrl, 2)}/movies/${
-                record["movie-id"]
-              }`
+              href: `${parentURL(
+                req.headers.host + req.originalUrl,
+                2
+              )}/movies/${record["movie-id"]}`
             },
             {
               _rel: "actor",
               type: "GET",
-              href: `${parentURL(req.originalUrl, 0)}`
+              href: `${parentURL(req.headers.host + req.originalUrl, 0)}`
             }
           ])
         )
