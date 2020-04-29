@@ -4,11 +4,12 @@
   "description": "My first Azure REST API",
   "main": "build/server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node build/server.js",
     "serve": "node build/server.js",
     "dev:build": "tsc -w",
     "dev:run": "nodemon -r dotenv/config build/server.js",
-    "dev": "concurrently npm:dev:*"
+    "dev": "concurrently npm:dev:*",
+    "postinstall": "tsc"
   },
   "repository": {
     "type": "git",
