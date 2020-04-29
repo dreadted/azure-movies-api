@@ -2,12 +2,12 @@
   "name": "azure-movies-api",
   "version": "0.0.0",
   "description": "My first Azure REST API",
-  "main": "build/index.js",
+  "main": "build/server.js",
   "scripts": {
     "start": "npm run serve",
-    "serve": "node build/index.js",
+    "serve": "node build/server.js",
     "watch:build": "tsc -w",
-    "watch:run": "nodemon -r dotenv/config build/index.js",
+    "watch:run": "nodemon -r dotenv/config build/server.js",
     "watch": "concurrently npm:watch:*",
     "postinstall": "tsc"
   },
