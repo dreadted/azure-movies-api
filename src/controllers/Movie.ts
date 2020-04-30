@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import * as Movie from "../models/Movie";
-import { addHATEOASLinks, parentURL } from "../lib/utils";
+import { createHATEOAS } from "../lib/utils";
 
 export const create: RequestHandler = async (
   req: Request,
@@ -24,11 +24,26 @@ export const readOne: RequestHandler = async (
 ): Promise<void> => {
   try {
     const id = parseInt(req.params.id);
-    const url = parentURL(`${req.headers.host + req.originalUrl}`, 0);
     if (id) {
       const data = await Movie.readOne({ id });
-      if (data) res.status(200).json(addHATEOASLinks(data, url));
-      else next({ status: 404, message: `Movie with id [${id}] not found.` });
+      if (data) {
+        data["movie-genre"] = data["movie-genre"]?.map(
+          genre =>
+            (genre = createHATEOAS(
+              genre,
+              req.headers.host + req.originalUrl,
+              [{ rel: "self", href: `/genres/${genre.id}`, fromParent: false }],
+              false
+            ))
+        );
+        res
+          .status(200)
+          .json(
+            createHATEOAS(data, req.headers.host + req.originalUrl, [
+              { rel: "roles", href: "/roles", fromParent: true }
+            ])
+          );
+      } else next({ status: 404, message: `Movie with id [${id}] not found.` });
     }
   } catch (err) {
     next(err);
@@ -43,15 +58,34 @@ export const readAll = async (
 ): Promise<void> => {
   try {
     const data = await Movie.readAll();
-    if (data && data.length)
+    if (data && data.length) {
+      data.forEach(
+        item =>
+          (item["movie-genre"] = item["movie-genre"]?.map(
+            genre =>
+              (genre = createHATEOAS(
+                genre,
+                req.headers.host + req.originalUrl,
+                [
+                  {
+                    rel: "self",
+                    href: `/genres/${genre.id}`,
+                    fromParent: false
+                  }
+                ],
+                false
+              ))
+          ))
+      );
+
       res
         .status(200)
         .json(
-          data.map((record: any) =>
-            addHATEOASLinks(record, req.headers.host + req.originalUrl)
+          data.map((document: any) =>
+            createHATEOAS(document, req.headers.host + req.originalUrl)
           )
         );
-    else next({ status: 404, message: "No Movies found." });
+    } else next({ status: 404, message: "No Movies found." });
   } catch (err) {
     next(err);
   }

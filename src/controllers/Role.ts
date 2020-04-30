@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import * as Role from "../models/Role";
 
-import { addHATEOASLinks, parentURL } from "../lib/utils";
+import { createHATEOAS } from "../lib/utils";
 
 export const create: RequestHandler = async (
   req: Request,
@@ -33,11 +33,11 @@ export const readOne = async (
       res
         .status(200)
         .json(
-          data.map((record: any) =>
-            addHATEOASLinks(record, req.headers.host + req.originalUrl)
+          data.map((document: any) =>
+            createHATEOAS(document, req.headers.host + req.originalUrl)
           )
         );
-    else next({ status: 404, message: "No genres found." });
+    else next({ status: 404, message: "No roles found." });
   } catch (err) {
     next(err);
   }
@@ -55,28 +55,19 @@ export const readAll = async (
     const data = await Role.readAll({ movieId, actorId });
     if (data && data.length)
       res.status(200).json(
-        data.map((record: any) =>
-          addHATEOASLinks(record, req.headers.host + req.originalUrl, [
-            {
-              _rel: "movie",
-              type: "GET",
-              href: `${parentURL(
-                req.headers.host + req.originalUrl,
-                2
-              )}/movies/${record["movie-id"]}`
-            },
-            {
-              _rel: "actor",
-              type: "GET",
-              href: `${parentURL(
-                req.headers.host + req.originalUrl,
-                2
-              )}/actors/${record["actor-id"]}`
-            }
-          ])
+        data.map((document: any) =>
+          createHATEOAS(
+            document,
+            req.headers.host + req.originalUrl,
+            [
+              { rel: "movie", href: `/movies/${document["movie-id"]}` },
+              { rel: "actor", href: `/actors/${document["actor-id"]}` }
+            ],
+            false
+          )
         )
       );
-    else next({ status: 404, message: "No genres found." });
+    else next({ status: 404, message: "No roles found." });
   } catch (err) {
     next(err);
   }
