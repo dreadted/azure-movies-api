@@ -30,7 +30,7 @@ export const readOne: RequestHandler = async (
         res
           .status(200)
           .json(
-            createHATEOAS(data, req.headers.host + req.originalUrl, [
+            createHATEOAS(data, req, [
               { rel: "roles", href: "/roles", fromParent: true }
             ])
           );
@@ -54,7 +54,7 @@ export const readAll = async (
         .status(200)
         .json(
           data.map((document: any) =>
-            createHATEOAS(document, req.headers.host + req.originalUrl, [
+            createHATEOAS(document, req, [
               { rel: "roles", href: "/roles", fromParent: true }
             ])
           )

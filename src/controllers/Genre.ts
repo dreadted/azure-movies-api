@@ -26,10 +26,7 @@ export const readOne: RequestHandler = async (
     const id = parseInt(req.params.id);
     if (id) {
       const data = await Genre.readOne({ id });
-      if (data)
-        res
-          .status(200)
-          .json(createHATEOAS(data, req.headers.host + req.originalUrl));
+      if (data) res.status(200).json(createHATEOAS(data, req));
       else next({ status: 404, message: `Genre with id [${id}] not found.` });
     }
   } catch (err) {
@@ -48,11 +45,7 @@ export const readAll = async (
     if (data && data.length)
       res
         .status(200)
-        .json(
-          data.map((document: any) =>
-            createHATEOAS(document, req.headers.host + req.originalUrl)
-          )
-        );
+        .json(data.map((document: any) => createHATEOAS(document, req)));
     else next({ status: 404, message: "No genres found." });
   } catch (err) {
     next(err);

@@ -32,11 +32,7 @@ export const readOne = async (
     if (data && data.length)
       res
         .status(200)
-        .json(
-          data.map((document: any) =>
-            createHATEOAS(document, req.headers.host + req.originalUrl)
-          )
-        );
+        .json(data.map((document: any) => createHATEOAS(document, req)));
     else next({ status: 404, message: "No roles found." });
   } catch (err) {
     next(err);
@@ -58,7 +54,7 @@ export const readAll = async (
         data.map((document: any) =>
           createHATEOAS(
             document,
-            req.headers.host + req.originalUrl,
+            req,
             [
               { rel: "movie", href: `/movies/${document["movie-id"]}` },
               { rel: "actor", href: `/actors/${document["actor-id"]}` }

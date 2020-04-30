@@ -31,7 +31,7 @@ export const readOne: RequestHandler = async (
           genre =>
             (genre = createHATEOAS(
               genre,
-              req.headers.host + req.originalUrl,
+              req,
               [{ rel: "self", href: `/genres/${genre.id}`, fromParent: false }],
               false
             ))
@@ -39,7 +39,7 @@ export const readOne: RequestHandler = async (
         res
           .status(200)
           .json(
-            createHATEOAS(data, req.headers.host + req.originalUrl, [
+            createHATEOAS(data, req, [
               { rel: "roles", href: "/roles", fromParent: true }
             ])
           );
@@ -65,7 +65,7 @@ export const readAll = async (
             genre =>
               (genre = createHATEOAS(
                 genre,
-                req.headers.host + req.originalUrl,
+                req,
                 [
                   {
                     rel: "self",
@@ -80,11 +80,7 @@ export const readAll = async (
 
       res
         .status(200)
-        .json(
-          data.map((document: any) =>
-            createHATEOAS(document, req.headers.host + req.originalUrl)
-          )
-        );
+        .json(data.map((document: any) => createHATEOAS(document, req)));
     } else next({ status: 404, message: "No Movies found." });
   } catch (err) {
     next(err);

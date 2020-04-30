@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 export const capitalize = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
@@ -12,8 +14,6 @@ type HATEOASLink = {
   [key: string]: { href: string };
 };
 
-const PROTOCOL = process.env.PROTOCOL + "://" || "https://";
-
 export const parentURL = (url: string, levels: number): string => {
   const parent: string = url.slice(0, url.lastIndexOf("/"));
   if (levels) return parentURL(parent, levels - 1);
@@ -22,19 +22,24 @@ export const parentURL = (url: string, levels: number): string => {
 
 export const createHATEOAS = (
   document: any,
-  url: string,
+  req: Request,
   hateoas?: HATEOASObject[],
   addSelf: boolean = true
 ) => {
+  let url: string = `${req.protocol}://${req.headers.host}${req.baseUrl}`;
   if (url.match(/(^.+\/\d+$)/)) url = parentURL(url, 0);
+
   const links = [];
   if (addSelf)
-    links.push({ self: { href: `${PROTOCOL + url}/${document.id}` } });
+    links.push({
+      self: {
+        href: `${url}/${document.id}`
+      }
+    });
   if (hateoas) {
     hateoas.forEach(item => {
       item.href =
-        PROTOCOL +
-          (item.fromParent ? url + "/" + document.id : parentURL(url, 0)) +
+        (item.fromParent ? `${url}/${document.id}` : `${parentURL(url, 0)}`) +
           item.href || "";
       const link: HATEOASLink = {};
       link[item.rel] = { href: item.href };
