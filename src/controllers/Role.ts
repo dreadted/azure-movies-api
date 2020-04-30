@@ -20,26 +20,6 @@ export const create: RequestHandler = async (
   next();
 };
 
-export const readOne = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const actorId = parseInt(req.params.actorId);
-    const movieId = parseInt(req.params.movieId);
-    const data = await Role.readAll({ actorId, movieId });
-    if (data && data.length)
-      res
-        .status(200)
-        .json(data.map((document: any) => createHATEOAS(document, req)));
-    else next({ status: 404, message: "No roles found." });
-  } catch (err) {
-    next(err);
-  }
-  next();
-};
-
 export const readAll = async (
   req: Request,
   res: Response,
@@ -78,8 +58,8 @@ export const remove = async (
   try {
     const movieId = parseInt(req.params.movieId);
     const actorId = parseInt(req.params.actorId);
-    // if (!id) next({ status: 400, message: "ID is blank!" });
-    const removed = await Role.remove({ movieId, actorId });
+    const id = parseInt(req.params.roleId);
+    const removed = await Role.remove({ movieId, actorId, id });
 
     if (removed) res.status(200).json({ ...removed });
     else

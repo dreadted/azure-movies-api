@@ -21,7 +21,6 @@ router.post(
 router.post(
   "/:actorId([0-9]+)/roles/:movieId([0-9]+)",
   validateName("name"),
-  sanitizeName("name"),
   validationResponse,
   Role.create,
   errorHandler
@@ -33,7 +32,7 @@ router.get("/:id([0-9]+)", Actor.readOne, errorHandler);
 router.get("/:actorId([0-9]+)/roles", Role.readAll, errorHandler);
 router.get(
   "/:actorId([0-9]+)/roles/:movieId([0-9]+)",
-  Role.readOne,
+  Role.readAll,
   errorHandler
 );
 
@@ -52,7 +51,7 @@ router.put(
 // DELETE
 router.delete("/:id([0-9]+)", validationResponse, Actor.remove, errorHandler);
 router.delete(
-  "/:actorId([0-9]+)/roles/:movieId([0-9]+)",
+  "/:actorId([0-9]+)/roles/:movieId([0-9]+)/:roleId([0-9]+)",
   Role.remove,
   errorHandler
 );

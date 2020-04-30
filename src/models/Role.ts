@@ -1,6 +1,7 @@
 import * as db from "../lib/db";
 
 export type Role = {
+  id?: number;
   movieId?: number;
   actorId?: number;
   name?: string;
@@ -30,7 +31,9 @@ export const readAll = async (input: Role) => {
 export const remove = async (input: Role) => {
   const movieId = input.movieId || null;
   const actorId = input.actorId || null;
+  const roleId = input.id;
   const data = await db.exec<Role>("Role", "Delete", {
+    roleId,
     movieId,
     actorId
   });
