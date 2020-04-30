@@ -15,6 +15,7 @@ app.use(slashes(false));
 
 app.use("/api/v1", router);
 
+router.use("/", routes.root);
 router.use("/movies", routes.movies);
 router.use("/genres", routes.genres);
 router.use("/actors", routes.actors);

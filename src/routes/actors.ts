@@ -1,4 +1,4 @@
-import { Router, Request, Response, RequestHandler } from "express";
+import { Router } from "express";
 import * as Actor from "../controllers/Actor";
 import * as Role from "../controllers/Role";
 import { validateName, sanitizeName, validationResponse } from "../validators";

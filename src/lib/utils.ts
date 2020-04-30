@@ -39,8 +39,9 @@ export const createHATEOAS = (
   if (hateoas) {
     hateoas.forEach(item => {
       item.href =
-        (item.fromParent ? `${url}/${document.id}` : `${parentURL(url, 0)}`) +
-          item.href || "";
+        (item.fromParent
+          ? `${url}/${document.id || ""}`
+          : `${parentURL(url, 0)}`) + item.href || "";
       const link: HATEOASLink = {};
       link[item.rel] = { href: item.href };
       links.push(link);
