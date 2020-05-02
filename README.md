@@ -2,6 +2,13 @@
 
 > My first Azure REST API
 
+## Contents
+
+- [Built with](#built-with)
+- [Installation](#installation)
+- [Deploy to Azure App Services](#deploy-to-azure-app-services)
+- [API Reference](#api-reference)
+
 ## Built with
 
 - [Azure SQL Database](https://azure.microsoft.com/services/sql-database/)
@@ -31,7 +38,7 @@ npm install
 npm run dev
 ```
 
-## Deploy TypeScript Node.js app to Azure App Services
+## Deploy to Azure App Services
 
 1. Install [Azure Tools for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-node-azure-pack)
 
@@ -116,6 +123,96 @@ echo Transpiling TypeScript in %DEPLOYMENT_TARGET%...call :ExecuteCmd node %DEPL
 ...
 <httpErrors existingResponse="PassThrough"/>
 ...
+```
+
+## API Reference
+
+### Genres
+
+#### <font color="green">GET</font> /v1/genres/{genre-id}
+
+| Path Parameters |                                      |                                    |
+| --------------- | ------------------------------------ | ---------------------------------- |
+| genre-id        | <font color="darkred">integer</font> | <font color="grey">optional</font> |
+
+**Example response**
+
+```json
+{
+  "id": { id },
+  "name": "{name}",
+  "created-at": "{timestamp}",
+  "updated-at": null,
+  "_links": [
+    {
+      "self": {
+        "href": "http://azure-movies-api.azurewebsites.net/api/v1/genres/{id}"
+      }
+    }
+  ]
+}
+```
+
+#### <font color="orange">POST</font> /v1/genres
+
+| Body Parameters |                                  |                                        |
+| --------------- | -------------------------------- | -------------------------------------- |
+| genre-id        | <font color="teal">string</font> | <font color="darkblue">required</font> |
+
+**Example request**
+
+```json
+{
+  "name": "{name}"
+}
+```
+
+**Example response**
+
+```json
+{
+  "id": { id },
+  "name": "{name}"
+}
+```
+
+#### <font color="blue">PUT</font> /v1/genres/{genre-id}
+
+| Path Parameters |                                      |                                        |
+| --------------- | ------------------------------------ | -------------------------------------- |
+| genre-id        | <font color="darkred">integer</font> | <font color="darkblue">required</font> |
+
+**Example request**
+
+```json
+{
+  "name": "{name}"
+}
+```
+
+**Example response**
+
+```json
+{
+  "id": { id },
+  "name": "{name}",
+  "created-at": "{timestamp}",
+  "updated-at": "{timestamp}"
+}
+```
+
+#### <font color="red">DELETE</font> /v1/genres/{genre-id}
+
+| Path Parameters |                                      |                                        |
+| --------------- | ------------------------------------ | -------------------------------------- |
+| genre-id        | <font color="darkred">integer</font> | <font color="darkblue">required</font> |
+
+**Example response**
+
+```json
+{
+  "id": { id }
+}
 ```
 
 ## Contact
