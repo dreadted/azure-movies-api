@@ -129,17 +129,72 @@ echo Transpiling TypeScript in %DEPLOYMENT_TARGET%...call :ExecuteCmd node %DEPL
 
 ### Genres
 
-#### <font color="green">GET</font> /v1/genres/{genre-id}
+#### List genres
 
-| Path Parameters |                                      |                                    |
-| --------------- | ------------------------------------ | ---------------------------------- |
-| genre-id        | <font color="darkred">integer</font> | <font color="grey">optional</font> |
+```endpoint
+GET /v1/genres
+```
 
-**Example response**
+##### Example request
+
+```curl
+$ curl https://azure-movies-api.azurewebsites.net/api/v1/genres
+```
+
+##### Example response
+
+```json
+[
+  {
+    "id": id,
+    "name": "{name}",
+    "created-at": "{timestamp}",
+    "updated-at": null,
+    "_links": [
+      {
+        "self": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/{id}"
+        }
+      }
+    ]
+  },
+  {
+    "id": id,
+    "name": "{name}",
+    "created-at": "{timestamp}",
+    "updated-at": null,
+    "_links": [
+      {
+        "self": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/{id}"
+        }
+      }
+    ]
+  }
+]
+```
+
+#### Retrive genre
+
+```endpoint
+GET /v1/genres/{genre-id}
+```
+
+##### Example request
+
+```curl
+$ curl https://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
+```
+
+| Path Parameters |         |          |
+| --------------- | ------- | -------- |
+| genre-id        | integer | requried |
+
+##### Example response
 
 ```json
 {
-  "id": { id },
+  "id": id,
   "name": "{name}",
   "created-at": "{timestamp}",
   "updated-at": null,
@@ -153,13 +208,21 @@ echo Transpiling TypeScript in %DEPLOYMENT_TARGET%...call :ExecuteCmd node %DEPL
 }
 ```
 
-#### <font color="orange">POST</font> /v1/genres
+#### Create genre
 
-| Body Parameters |                                  |                                        |
-| --------------- | -------------------------------- | -------------------------------------- |
-| genre-id        | <font color="teal">string</font> | <font color="darkblue">required</font> |
+```endpoint
+POST /v1/genres
+```
 
-**Example request**
+| Body Parameters |        |          |
+| --------------- | ------ | -------- |
+| name            | string | required |
+
+##### Example request
+
+```curl
+$ curl -X POST https://azure-movies-api.azurewebsites.net/api/v1/genres
+```
 
 ```json
 {
@@ -167,22 +230,26 @@ echo Transpiling TypeScript in %DEPLOYMENT_TARGET%...call :ExecuteCmd node %DEPL
 }
 ```
 
-**Example response**
+##### Example response
 
 ```json
 {
-  "id": { id },
+  "id": id,
   "name": "{name}"
 }
 ```
 
-#### <font color="blue">PUT</font> /v1/genres/{genre-id}
+#### Update genre
 
-| Path Parameters |                                      |                                        |
-| --------------- | ------------------------------------ | -------------------------------------- |
-| genre-id        | <font color="darkred">integer</font> | <font color="darkblue">required</font> |
+```endpoint
+PUT /v1/genres/{genre-id}
+```
 
-**Example request**
+| Path Parameters |         |          |
+| --------------- | ------- | -------- |
+| genre-id        | integer | required |
+
+##### Example request
 
 ```json
 {
@@ -190,7 +257,7 @@ echo Transpiling TypeScript in %DEPLOYMENT_TARGET%...call :ExecuteCmd node %DEPL
 }
 ```
 
-**Example response**
+##### Example response
 
 ```json
 {
@@ -201,17 +268,21 @@ echo Transpiling TypeScript in %DEPLOYMENT_TARGET%...call :ExecuteCmd node %DEPL
 }
 ```
 
-#### <font color="red">DELETE</font> /v1/genres/{genre-id}
+#### Delete genre
 
-| Path Parameters |                                      |                                        |
-| --------------- | ------------------------------------ | -------------------------------------- |
-| genre-id        | <font color="darkred">integer</font> | <font color="darkblue">required</font> |
+```endpoint
+DELETE /v1/genres/{genre-id}
+```
 
-**Example response**
+| Path Parameters |         |          |
+| --------------- | ------- | -------- |
+| genre-id        | integer | required |
+
+##### Example response
 
 ```json
 {
-  "id": { id }
+  "id": id
 }
 ```
 
