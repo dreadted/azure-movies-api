@@ -1,7 +1,7 @@
 import { Router, Request, Response, RequestHandler } from "express";
 
 import { createHATEOAS } from "../lib/utils";
-import errorHandler from "../errors";
+import { errorHandler, Methods, notAllowed } from "../errors";
 
 const router = Router();
 
@@ -22,6 +22,14 @@ const root: RequestHandler = async (
   );
 };
 
+const notAllowedMethods: Methods[] = [
+  Methods.POST,
+  Methods.PUT,
+  Methods.PATCH,
+  Methods.DELETE
+];
+
 router.get("/", root, errorHandler);
+notAllowed(router, "/", notAllowedMethods);
 
 export default router;

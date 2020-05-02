@@ -1,9 +1,9 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import slashes from "connect-slashes";
-import config from "./lib/config";
 
 import routes from "./routes";
+import { errorHandler } from "./errors";
 
 const app = express();
 const router = express.Router();
@@ -19,5 +19,7 @@ router.use("/", routes.root);
 router.use("/movies", routes.movies);
 router.use("/genres", routes.genres);
 router.use("/actors", routes.actors);
+
+app.use(errorHandler);
 
 export default app;

@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-
 import { check, body, param, validationResult } from "express-validator";
 
 import { capitalize } from "../lib/utils";

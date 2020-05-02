@@ -4,13 +4,13 @@ export const capitalize = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
 
-export type HATEOASObject = {
+export type HATEOAS = {
   rel: string;
   href: string;
   fromParent?: boolean;
 };
 
-type HATEOASLink = {
+type Link = {
   [key: string]: { href: string };
 };
 
@@ -20,10 +20,13 @@ export const parentURL = (url: string, levels: number): string => {
   return parent;
 };
 
+interface HasId {
+  id?: number;
+}
 export const createHATEOAS = (
-  document: any,
+  document: HasId,
   req: Request,
-  hateoas?: HATEOASObject[],
+  hateoas?: HATEOAS[],
   addSelf: boolean = true
 ) => {
   let url: string = `${req.protocol}://${req.headers.host}${req.baseUrl}`;
@@ -42,7 +45,7 @@ export const createHATEOAS = (
         (item.fromParent
           ? `${url}/${document.id || ""}`
           : `${parentURL(url, 0)}`) + item.href || "";
-      const link: HATEOASLink = {};
+      const link: Link = {};
       link[item.rel] = { href: item.href };
       links.push(link);
     });
