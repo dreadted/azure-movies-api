@@ -8,6 +8,7 @@
 - [Installation](#installation)
 - [Deploy to Azure App Services](#deploy-to-azure-app-services)
 - [API Reference](#api-reference)
+- [Contact](#contact)
 
 ## Built with
 
@@ -146,7 +147,7 @@ $ curl https://azure-movies-api.azurewebsites.net/api/v1/genres
 ```json
 [
   {
-    "id": id,
+    "id": 1,
     "name": "{name}",
     "created-at": "{timestamp}",
     "updated-at": null,
@@ -159,7 +160,7 @@ $ curl https://azure-movies-api.azurewebsites.net/api/v1/genres
     ]
   },
   {
-    "id": id,
+    "id": 2,
     "name": "{name}",
     "created-at": "{timestamp}",
     "updated-at": null,
@@ -186,15 +187,17 @@ GET /v1/genres/{genre-id}
 $ curl https://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
 ```
 
-| Path Parameters |         |          |
-| --------------- | ------- | -------- |
-| genre-id        | integer | requried |
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| genre-id | integer | requried |
 
 ##### Example response
 
 ```json
 {
-  "id": id,
+  "id": 1,
   "name": "{name}",
   "created-at": "{timestamp}",
   "updated-at": null,
@@ -214,10 +217,6 @@ $ curl https://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
 POST /v1/genres
 ```
 
-| Body Parameters |        |          |
-| --------------- | ------ | -------- |
-| name            | string | required |
-
 ##### Example request
 
 ```curl
@@ -230,11 +229,17 @@ $ curl -X POST https://azure-movies-api.azurewebsites.net/api/v1/genres
 }
 ```
 
+###### Body parameters
+
+| property | type   |          |
+| -------- | ------ | -------- |
+| name     | string | required |
+
 ##### Example response
 
 ```json
 {
-  "id": id,
+  "id": 1,
   "name": "{name}"
 }
 ```
@@ -245,11 +250,17 @@ $ curl -X POST https://azure-movies-api.azurewebsites.net/api/v1/genres
 PUT /v1/genres/{genre-id}
 ```
 
-| Path Parameters |         |          |
-| --------------- | ------- | -------- |
-| genre-id        | integer | required |
-
 ##### Example request
+
+```curl
+curl -X PUT https://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
+```
+
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| genre-id | integer | required |
 
 ```json
 {
@@ -257,11 +268,17 @@ PUT /v1/genres/{genre-id}
 }
 ```
 
+###### Body parameters
+
+| property | type   |          |
+| -------- | ------ | -------- |
+| name     | string | required |
+
 ##### Example response
 
 ```json
 {
-  "id": { id },
+  "id": 1,
   "name": "{name}",
   "created-at": "{timestamp}",
   "updated-at": "{timestamp}"
@@ -274,15 +291,23 @@ PUT /v1/genres/{genre-id}
 DELETE /v1/genres/{genre-id}
 ```
 
-| Path Parameters |         |          |
-| --------------- | ------- | -------- |
-| genre-id        | integer | required |
+##### Example request
+
+```curl
+curl -X DELETE https://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
+```
+
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| genre-id | integer | required |
 
 ##### Example response
 
 ```json
 {
-  "id": id
+  "id": 1
 }
 ```
 
