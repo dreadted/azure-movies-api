@@ -8,6 +8,7 @@ import { errorHandler } from "./errors";
 const app = express();
 const router = express.Router();
 
+app.enable("trust proxy");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
