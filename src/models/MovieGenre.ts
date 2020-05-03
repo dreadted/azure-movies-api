@@ -3,7 +3,7 @@ import * as db from "../lib/db";
 export type MovieGenre = {
   movieId?: number;
   genreId?: number;
-  name?: string;
+  genreName?: string;
 };
 
 export const create = async (input: MovieGenre) => {

@@ -43,7 +43,7 @@ router.delete("/:id([0-9]+)", Movie.remove, errorHandler);
 
 // Methods not allowed
 notAllowed(router, "/", [Methods.PUT, Methods.PATCH, Methods.DELETE]);
-notAllowed(router, "/:id([0-9]+)", [Methods.PUT, Methods.PATCH]);
+notAllowed(router, "/:id([0-9]+)", [Methods.POST, Methods.PATCH]);
 notAllowed(router, "/:movieId([0-9]+)/roles", [
   Methods.POST,
   Methods.PUT,

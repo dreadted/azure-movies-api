@@ -18,9 +18,9 @@ const addMovieGenres = async (movieId: number, genres: Genre[]) => {
   }
 };
 
-const convertGenreKeys = (genres: Genre[]) => {
-  return genres.map((genre: any) => {
-    return { id: genre["genre-id"], name: genre["genre-name"] };
+const convertMovieGenres = (genres: MovieGenre.MovieGenre[]) => {
+  return genres.map(genre => {
+    return { id: genre.genreId, name: genre.genreName } as Genre;
   });
 };
 
@@ -38,7 +38,7 @@ export const create = async (input: Movie) => {
     await addMovieGenres(data.id, inputGenres);
 
     const outputGenres = await MovieGenre.readAll({ movieId: data.id });
-    data.movieGenre = convertGenreKeys(outputGenres);
+    data.movieGenre = convertMovieGenres(outputGenres);
   }
 
   return data;
@@ -49,8 +49,8 @@ export const readOne = async (input: Movie) => {
   const data = await db.exec<Movie>("Movie", "Read", { id });
   const genres = await MovieGenre.readAll({ movieId: id });
   if (genres && genres.length)
-    data.movieGenre = genres.map((genre: any) => {
-      return { id: genre["genre-id"], name: genre["genre-name"] };
+    data.movieGenre = genres.map((genre: MovieGenre.MovieGenre) => {
+      return { id: genre.genreId, name: genre.genreName };
     });
   return data;
 };
@@ -63,9 +63,11 @@ export const readAll = async () => {
       data.forEach(
         (movie: Movie) =>
           (movie.movieGenre = genres
-            .filter((genre: any) => genre["movie-id"] === movie.id)
+            .filter(
+              (genre: MovieGenre.MovieGenre) => genre.movieId === movie.id
+            )
             .map((genre: any) => {
-              return { id: genre["genre-id"], name: genre["genre-name"] };
+              return { id: genre.genreId, name: genre.genreName };
             }))
       );
     }
@@ -93,7 +95,7 @@ export const update = async (input: Movie) => {
       await addMovieGenres(data.id, inputGenres);
 
       const outputGenres = await MovieGenre.readAll({ movieId: data.id });
-      data.movieGenre = convertGenreKeys(outputGenres);
+      data.movieGenre = convertMovieGenres(outputGenres);
     }
   }
 

@@ -13,7 +13,17 @@ export const create: RequestHandler = async (
     const actorId = parseInt(req.params.actorId);
     const { name } = req.body;
     const data = await Role.create({ name, movieId, actorId });
-    res.status(201).json({ ...data });
+    res.status(201).json({
+      ...createResponse(
+        data,
+        req,
+        [
+          { rel: "movie", href: `/movies/${data.movieId}` },
+          { rel: "actor", href: `/actors/${data.actorId}` }
+        ],
+        false
+      )
+    });
   } catch (err) {
     next(err);
   }
@@ -36,8 +46,8 @@ export const readAll = async (
             document,
             req,
             [
-              { rel: "movie", href: `/movies/${document["movie-id"]}` },
-              { rel: "actor", href: `/actors/${document["actor-id"]}` }
+              { rel: "movie", href: `/movies/${document.movieId}` },
+              { rel: "actor", href: `/actors/${document.actorId}` }
             ],
             false
           )
@@ -61,7 +71,18 @@ export const remove = async (
     const id = parseInt(req.params.roleId);
     const removed = await Role.remove({ movieId, actorId, id });
 
-    if (removed) res.status(200).json({ ...removed });
+    if (removed)
+      res.status(200).json({
+        ...createResponse(
+          removed,
+          req,
+          [
+            { rel: "movie", href: `/movies/${removed.movieId}` },
+            { rel: "actor", href: `/actors/${removed.actorId}` }
+          ],
+          false
+        )
+      });
     else
       next({
         status: 404,

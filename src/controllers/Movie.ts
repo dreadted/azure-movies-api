@@ -8,12 +8,11 @@ export const create: RequestHandler = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { id, name, description } = req.body;
+    const { name, description } = req.body;
     const imageUrl = req.body["image-url"];
     const productionYear = req.body["production-year"];
     const movieGenre = req.body["movie-genre"];
     const data = await Movie.create({
-      id,
       name,
       description,
       imageUrl,
@@ -105,9 +104,19 @@ export const update: RequestHandler = async (
 ): Promise<void> => {
   try {
     const id = parseInt(req.params.id);
-    const input = req.body;
+    const { name, description } = req.body;
+    const imageUrl = req.body["image-url"];
+    const productionYear = req.body["production-year"];
+    const movieGenre = req.body["movie-genre"];
 
-    const data = await Movie.update(input);
+    const data = await Movie.update({
+      id,
+      name,
+      description,
+      imageUrl,
+      productionYear,
+      movieGenre
+    });
     if (data) res.status(200).json({ ...createResponse(data, req) });
     else next({ status: 404, message: `Movie with id [${id}] not found.` });
   } catch (err) {

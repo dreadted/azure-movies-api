@@ -1,6 +1,6 @@
 const sql = require("mssql");
 import config from "./config";
-import { camelCase, kebabCase, upperFirst } from "lodash";
+import { camelCase, upperFirst } from "lodash";
 import { convertKeys } from "./utils";
 
 const pascalCase = (str: string | undefined) => {
