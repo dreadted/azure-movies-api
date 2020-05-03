@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import * as Actor from "../models/Actor";
-import { createHATEOAS } from "../lib/utils";
+import { createResponse } from "../lib/utils";
 
 export const create: RequestHandler = async (
   req: Request,
@@ -8,9 +8,10 @@ export const create: RequestHandler = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const input = req.body;
-    const data = await Actor.create(input);
-    res.status(201).json({ ...data });
+    const firstName = req.body["first-name"];
+    const lastName = req.body["last-name"];
+    const data = await Actor.create({ firstName, lastName });
+    res.status(201).json({ ...createResponse(data, req) });
   } catch (err) {
     next(err);
   }
@@ -30,7 +31,7 @@ export const readOne: RequestHandler = async (
         res
           .status(200)
           .json(
-            createHATEOAS(data, req, [
+            createResponse(data, req, [
               { rel: "roles", href: "/roles", fromParent: true }
             ])
           );
@@ -53,8 +54,8 @@ export const readAll = async (
       res
         .status(200)
         .json(
-          data.map((document: any) =>
-            createHATEOAS(document, req, [
+          data.map((document: Actor.Actor) =>
+            createResponse(document, req, [
               { rel: "roles", href: "/roles", fromParent: true }
             ])
           )
@@ -78,10 +79,10 @@ export const update: RequestHandler = async (
 
     const data = await Actor.update({
       id,
-      "first-name": firstName,
-      "last-name": lastName
+      firstName,
+      lastName
     });
-    if (data) res.status(200).json({ ...data });
+    if (data) res.status(200).json({ ...createResponse(data, req) });
     else next({ status: 404, message: `Actor with id [${id}] not found.` });
   } catch (err) {
     next(err);

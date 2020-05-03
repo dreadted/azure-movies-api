@@ -1,6 +1,6 @@
 import { Router, Request, Response, RequestHandler } from "express";
 
-import { createHATEOAS } from "../lib/utils";
+import { createResponse } from "../lib/utils";
 import { errorHandler, Methods, notAllowed } from "../errors";
 
 const router = Router();
@@ -11,7 +11,7 @@ const root: RequestHandler = async (
 ): Promise<void> => {
   const routes = ["genres", "movies", "actors"];
   res.status(200).json(
-    createHATEOAS(
+    createResponse(
       {},
       req,
       routes.map(route => {

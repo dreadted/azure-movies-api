@@ -1,7 +1,38 @@
 import { Request } from "express";
+import { kebabCase, upperFirst } from "lodash";
 
 export const capitalize = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
+
+const keyName = (key: string, model?: string) => {
+  const keysToConvert = ["id", "name", "description"];
+  if (model && keysToConvert.includes(key)) return model + upperFirst(key);
+  return key.replace(model || "", "");
+};
+
+type Converter = (str?: string | undefined) => string;
+
+export const convertKeys = (
+  record: any,
+  converter: Converter,
+  model?: string
+) => {
+  const obj = {};
+  if (record) {
+    for (const pair of Object.entries(record)) {
+      if (Object(pair) === pair) {
+        const { "0": key, "1": val } = pair;
+        Object.defineProperty(obj, converter(keyName(key, model)), {
+          configurable: true,
+          enumerable: true,
+          writable: true,
+          value: val
+        });
+      }
+    }
+    if (Object.keys(obj).length) return obj;
+  }
 };
 
 export type HATEOAS = {
@@ -23,7 +54,7 @@ export const parentURL = (url: string, levels: number): string => {
 interface HasId {
   id?: number;
 }
-export const createHATEOAS = (
+export const createResponse = (
   document: HasId,
   req: Request,
   hateoas?: HATEOAS[],
@@ -50,5 +81,5 @@ export const createHATEOAS = (
       links.push(link);
     });
   }
-  return { ...document, _links: links };
+  return { ...convertKeys(document, kebabCase), _links: links };
 };

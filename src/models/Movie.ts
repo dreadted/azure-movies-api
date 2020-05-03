@@ -6,9 +6,9 @@ export type Movie = {
   id?: number;
   name?: string;
   description?: string;
-  "image-url"?: string;
-  "production-year"?: number;
-  "movie-genre"?: Genre[];
+  imageUrl?: string;
+  productionYear?: number;
+  movieGenre?: Genre[];
 };
 
 // TODO: Error handling!
@@ -25,29 +25,31 @@ const convertGenreKeys = (genres: Genre[]) => {
 };
 
 export const create = async (input: Movie) => {
+  const { name, description, imageUrl, productionYear, movieGenre } = input;
   const data = await db.exec<Movie>("Movie", "Create", {
-    MovieName: input.name,
-    MovieDescription: input.description,
-    ImageURL: input["image-url"],
-    ProductionYear: input["production-year"]
+    name,
+    description,
+    imageUrl,
+    productionYear
   });
-  const inputGenres: Genre[] = input["movie-genre"] || [];
+  const inputGenres: Genre[] = movieGenre || [];
 
   if (data && data.id && inputGenres && inputGenres.length) {
     await addMovieGenres(data.id, inputGenres);
 
     const outputGenres = await MovieGenre.readAll({ movieId: data.id });
-    data["movie-genre"] = convertGenreKeys(outputGenres);
+    data.movieGenre = convertGenreKeys(outputGenres);
   }
 
   return data;
 };
 
 export const readOne = async (input: Movie) => {
-  const data = await db.exec<Movie>("Movie", "Read", { MovieId: input.id });
-  const genres = await MovieGenre.readAll({ movieId: input.id });
+  const { id } = input;
+  const data = await db.exec<Movie>("Movie", "Read", { id });
+  const genres = await MovieGenre.readAll({ movieId: id });
   if (genres && genres.length)
-    data["movie-genre"] = genres.map((genre: any) => {
+    data.movieGenre = genres.map((genre: any) => {
       return { id: genre["genre-id"], name: genre["genre-name"] };
     });
   return data;
@@ -60,7 +62,7 @@ export const readAll = async () => {
     if (genres && genres.length) {
       data.forEach(
         (movie: Movie) =>
-          (movie["movie-genre"] = genres
+          (movie.movieGenre = genres
             .filter((genre: any) => genre["movie-id"] === movie.id)
             .map((genre: any) => {
               return { id: genre["genre-id"], name: genre["genre-name"] };
@@ -73,23 +75,25 @@ export const readAll = async () => {
 };
 
 export const update = async (input: Movie) => {
+  const { id, name, description, imageUrl, productionYear, movieGenre } = input;
+
   const data = await db.exec<Movie>("Movie", "Update", {
-    movieId: input.id,
-    movieName: input.name,
-    movieDescription: input.description,
-    imageURL: input["image-url"],
-    productionYear: input["production-year"]
+    id,
+    name,
+    description,
+    imageUrl,
+    productionYear
   });
 
   if (data && data.id) {
     await MovieGenre.remove({ movieId: data.id });
-    const inputGenres: Genre[] = input["movie-genre"] || [];
+    const inputGenres: Genre[] = movieGenre || [];
 
     if (inputGenres && inputGenres.length) {
       await addMovieGenres(data.id, inputGenres);
 
       const outputGenres = await MovieGenre.readAll({ movieId: data.id });
-      data["movie-genre"] = convertGenreKeys(outputGenres);
+      data.movieGenre = convertGenreKeys(outputGenres);
     }
   }
 

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import * as Movie from "../models/Movie";
-import { createHATEOAS } from "../lib/utils";
+import { createResponse } from "../lib/utils";
 
 export const create: RequestHandler = async (
   req: Request,
@@ -8,9 +8,19 @@ export const create: RequestHandler = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const input = req.body;
-    const data = await Movie.create(input);
-    res.status(201).json({ ...data });
+    const { id, name, description } = req.body;
+    const imageUrl = req.body["image-url"];
+    const productionYear = req.body["production-year"];
+    const movieGenre = req.body["movie-genre"];
+    const data = await Movie.create({
+      id,
+      name,
+      description,
+      imageUrl,
+      productionYear,
+      movieGenre
+    });
+    res.status(201).json({ ...createResponse(data, req) });
   } catch (err) {
     next(err);
   }
@@ -27,9 +37,9 @@ export const readOne: RequestHandler = async (
     if (id) {
       const data = await Movie.readOne({ id });
       if (data) {
-        data["movie-genre"] = data["movie-genre"]?.map(
+        data.movieGenre = data.movieGenre?.map(
           genre =>
-            (genre = createHATEOAS(
+            (genre = createResponse(
               genre,
               req,
               [{ rel: "self", href: `/genres/${genre.id}`, fromParent: false }],
@@ -39,7 +49,7 @@ export const readOne: RequestHandler = async (
         res
           .status(200)
           .json(
-            createHATEOAS(data, req, [
+            createResponse(data, req, [
               { rel: "roles", href: "/roles", fromParent: true }
             ])
           );
@@ -61,9 +71,9 @@ export const readAll = async (
     if (data && data.length) {
       data.forEach(
         item =>
-          (item["movie-genre"] = item["movie-genre"]?.map(
+          (item.movieGenre = item.movieGenre?.map(
             genre =>
-              (genre = createHATEOAS(
+              (genre = createResponse(
                 genre,
                 req,
                 [
@@ -80,7 +90,7 @@ export const readAll = async (
 
       res
         .status(200)
-        .json(data.map((document: any) => createHATEOAS(document, req)));
+        .json(data.map((document: any) => createResponse(document, req)));
     } else next({ status: 404, message: "No Movies found." });
   } catch (err) {
     next(err);
@@ -98,7 +108,7 @@ export const update: RequestHandler = async (
     const input = req.body;
 
     const data = await Movie.update(input);
-    if (data) res.status(200).json({ ...data });
+    if (data) res.status(200).json({ ...createResponse(data, req) });
     else next({ status: 404, message: `Movie with id [${id}] not found.` });
   } catch (err) {
     next(err);

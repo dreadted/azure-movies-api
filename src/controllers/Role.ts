@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import * as Role from "../models/Role";
 
-import { createHATEOAS } from "../lib/utils";
+import { createResponse } from "../lib/utils";
 
 export const create: RequestHandler = async (
   req: Request,
@@ -32,7 +32,7 @@ export const readAll = async (
     if (data && data.length)
       res.status(200).json(
         data.map((document: any) =>
-          createHATEOAS(
+          createResponse(
             document,
             req,
             [

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import * as Genre from "../models/Genre";
-import { createHATEOAS } from "../lib/utils";
+import { createResponse } from "../lib/utils";
 
 export const create: RequestHandler = async (
   req: Request,
@@ -10,7 +10,7 @@ export const create: RequestHandler = async (
   try {
     const input = req.body;
     const data = await Genre.create(input);
-    res.status(201).json({ ...data });
+    res.status(201).json({ ...createResponse(data, req) });
   } catch (err) {
     next(err);
   }
@@ -26,7 +26,7 @@ export const readOne: RequestHandler = async (
     const id = parseInt(req.params.id);
     if (id) {
       const data = await Genre.readOne({ id });
-      if (data) res.status(200).json(createHATEOAS(data, req));
+      if (data) res.status(200).json(createResponse(data, req));
       else next({ status: 404, message: `Genre with id [${id}] not found.` });
     }
   } catch (err) {
@@ -45,7 +45,7 @@ export const readAll = async (
     if (data && data.length)
       res
         .status(200)
-        .json(data.map((document: any) => createHATEOAS(document, req)));
+        .json(data.map((document: any) => createResponse(document, req)));
     else next({ status: 404, message: "No genres found." });
   } catch (err) {
     next(err);
@@ -63,7 +63,7 @@ export const update: RequestHandler = async (
     const input = req.body;
 
     const data = await Genre.update({ id, name: input.name });
-    if (data) res.status(200).json({ ...data });
+    if (data) res.status(200).json({ ...createResponse(data, req) });
     else next({ status: 404, message: `Genre with id [${id}] not found.` });
   } catch (err) {
     next(err);

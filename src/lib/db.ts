@@ -1,34 +1,10 @@
 const sql = require("mssql");
 import config from "./config";
 import { camelCase, kebabCase, upperFirst } from "lodash";
+import { convertKeys } from "./utils";
 
 const pascalCase = (str: string | undefined) => {
   return upperFirst(camelCase(str));
-  // return startCase(camelCase(str)).replace(/ /g, '');
-};
-
-type Converter = (str?: string | undefined) => string;
-
-const convertKeys = (record: any, converter: Converter, model?: string) => {
-  const obj = {};
-  if (record) {
-    for (const pair of Object.entries(record)) {
-      if (Object(pair) === pair) {
-        const { "0": key, "1": val } = pair;
-        Object.defineProperty(
-          obj,
-          converter(key.replace(model ? model : "", "")),
-          {
-            configurable: true,
-            enumerable: true,
-            writable: true,
-            value: val
-          }
-        );
-      }
-    }
-    if (Object.keys(obj).length) return obj;
-  }
 };
 
 export const exec = async <T extends {}>(
@@ -41,7 +17,7 @@ export const exec = async <T extends {}>(
   const request = pool.request();
 
   if (params) {
-    const sqlParams: any = convertKeys(params, pascalCase);
+    const sqlParams: any = convertKeys(params, pascalCase, model);
 
     for (const key in sqlParams) {
       request.input(key, sqlParams[key]);
@@ -51,7 +27,7 @@ export const exec = async <T extends {}>(
   // TODO: Try to identify if T is array type
   if (getCollection)
     return result.recordset.map((record: any) =>
-      convertKeys(record, kebabCase, model)
+      convertKeys(record, camelCase, model)
     ) as T;
-  return convertKeys(result.recordset[0], kebabCase, model) as T;
+  return convertKeys(result.recordset[0], camelCase, model) as T;
 };
