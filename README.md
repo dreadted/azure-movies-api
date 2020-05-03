@@ -155,7 +155,7 @@ $ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/
     "_links": [
       {
         "self": {
-          "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/{id}"
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/1"
         }
       }
     ]
@@ -168,7 +168,7 @@ $ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/
     "_links": [
       {
         "self": {
-          "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/{id}"
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/2"
         }
       }
     ]
@@ -205,7 +205,7 @@ $ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/
   "_links": [
     {
       "self": {
-        "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/{id}"
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/1"
       }
     }
   ]
