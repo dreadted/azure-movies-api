@@ -139,7 +139,7 @@ GET /v1/genres
 ##### Example request
 
 ```curl
-$ curl https://azure-movies-api.azurewebsites.net/api/v1/genres
+$ curl --location --request GET 'http://azure-movies-api.azurewebsites.net/api/v1/genres'
 ```
 
 ##### Example response
@@ -150,7 +150,7 @@ $ curl https://azure-movies-api.azurewebsites.net/api/v1/genres
     "id": 1,
     "name": "{name}",
     "created-at": "{timestamp}",
-    "updated-at": null,
+    "updated-at": "{timestamp}",
     "_links": [
       {
         "self": {
@@ -163,7 +163,7 @@ $ curl https://azure-movies-api.azurewebsites.net/api/v1/genres
     "id": 2,
     "name": "{name}",
     "created-at": "{timestamp}",
-    "updated-at": null,
+    "updated-at": "{timestamp}",
     "_links": [
       {
         "self": {
@@ -175,7 +175,7 @@ $ curl https://azure-movies-api.azurewebsites.net/api/v1/genres
 ]
 ```
 
-#### Retrive genre
+#### Retrieve genre
 
 ```endpoint
 GET /v1/genres/{genre-id}
@@ -184,7 +184,7 @@ GET /v1/genres/{genre-id}
 ##### Example request
 
 ```curl
-$ curl https://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
+$ curl --location --request GET 'http://azure-movies-api.azurewebsites.net/api/v1/genres'/{genre-id}
 ```
 
 ###### Path parameters
@@ -200,7 +200,7 @@ $ curl https://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
   "id": 1,
   "name": "{name}",
   "created-at": "{timestamp}",
-  "updated-at": null,
+  "updated-at": "{timestamp}",
   "_links": [
     {
       "self": {
@@ -220,7 +220,10 @@ POST /v1/genres
 ##### Example request
 
 ```curl
-$ curl -X POST https://azure-movies-api.azurewebsites.net/api/v1/genres
+$ curl --location --request POST 'http://azure-movies-api.azurewebsites.net/api/v1/genres' \
+--data-raw '{
+    "name": "{name}"
+}'
 ```
 
 ```json
@@ -253,7 +256,10 @@ PUT /v1/genres/{genre-id}
 ##### Example request
 
 ```curl
-curl -X PUT https://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
+$ curl --location --request PUT 'http://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}' \
+--data-raw '{
+    "name": "{name}"
+}'
 ```
 
 ###### Path parameters
@@ -294,7 +300,7 @@ DELETE /v1/genres/{genre-id}
 ##### Example request
 
 ```curl
-curl -X DELETE https://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
+$ curl --location --request DELETE 'http://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
 ```
 
 ###### Path parameters
