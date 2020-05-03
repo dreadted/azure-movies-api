@@ -103,6 +103,6 @@ export const update = async (input: Movie) => {
 };
 
 export const remove = async (input: Movie) => {
-  const data = await db.exec<Movie>("Movie", "Delete", { movieId: input.id });
+  const data = await db.exec<Movie>("Movie", "Delete", { id: input.id });
   return data;
 };
