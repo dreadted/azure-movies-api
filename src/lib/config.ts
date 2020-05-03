@@ -3,7 +3,7 @@ const config = {
   password: process.env.DBPassword,
   server: process.env.DBServer,
   database: "Movies",
-  options: { encrypt: true }
+  options: { encrypt: true, enableArithAbort: true }
 };
 
 export default config;
