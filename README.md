@@ -62,11 +62,12 @@ npm run dev
 5. Change your `package.json` setting to:
 
 ```json
+...
 "scripts": {
     "start":"node build/server.js",
-    "postinstall": "tsc",
-     ...
+    "postinstall": "tsc"
   }
+...
 ```
 
 6. Make sure typescript and @types/... are all in your `package.json` dependencies (`npm install ... --save`)
@@ -139,7 +140,7 @@ GET /v1/genres
 ##### Example request
 
 ```curl
-$ curl --location --request GET 'http://azure-movies-api.azurewebsites.net/api/v1/genres'
+$ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/v1/genres'
 ```
 
 ##### Example response
@@ -184,7 +185,7 @@ GET /v1/genres/{genre-id}
 ##### Example request
 
 ```curl
-$ curl --location --request GET 'http://azure-movies-api.azurewebsites.net/api/v1/genres'/{genre-id}
+$ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/v1/genres'/{genre-id}
 ```
 
 ###### Path parameters
@@ -204,7 +205,7 @@ $ curl --location --request GET 'http://azure-movies-api.azurewebsites.net/api/v
   "_links": [
     {
       "self": {
-        "href": "http://azure-movies-api.azurewebsites.net/api/v1/genres/{id}"
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/{id}"
       }
     }
   ]
@@ -220,7 +221,7 @@ POST /v1/genres
 ##### Example request
 
 ```curl
-$ curl --location --request POST 'http://azure-movies-api.azurewebsites.net/api/v1/genres' \
+$ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api/v1/genres' \
 --data-raw '{
     "name": "{name}"
 }'
@@ -256,7 +257,7 @@ PUT /v1/genres/{genre-id}
 ##### Example request
 
 ```curl
-$ curl --location --request PUT 'http://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}' \
+$ curl --location --request PUT 'https://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}' \
 --data-raw '{
     "name": "{name}"
 }'
@@ -300,7 +301,7 @@ DELETE /v1/genres/{genre-id}
 ##### Example request
 
 ```curl
-$ curl --location --request DELETE 'http://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
+$ curl --location --request DELETE 'https://azure-movies-api.azurewebsites.net/api/v1/genres/{genre-id}
 ```
 
 ###### Path parameters
@@ -314,6 +315,774 @@ $ curl --location --request DELETE 'http://azure-movies-api.azurewebsites.net/ap
 ```json
 {
   "id": 1
+}
+```
+
+### Movies
+
+#### List movies
+
+```endpoint
+GET /v1/movies
+```
+
+##### Example request
+
+```curl
+$ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/v1/movies'
+```
+
+##### Example response
+
+```json
+[
+  {
+    "id": 1,
+    "name": "{name}",
+    "description": "{description}",
+    "image-url": "{image-url}",
+    "production-year": 2020,
+    "created-at": "{timestamp}",
+    "updated-at": "{timestamp}",
+    "movie-genre": [
+      {
+        "id": 5,
+        "name": "{genre-name}",
+        "_links": [
+          {
+            "self": {
+              "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/5"
+            }
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "name": "{genre-name}",
+        "_links": [
+          {
+            "self": {
+              "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/6"
+            }
+          }
+        ]
+      }
+    ],
+    "_links": [
+      {
+        "self": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/movies/1"
+        }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "{name}",
+    "description": "{description}",
+    "image-url": "{image-url}",
+    "production-year": 2020,
+    "created-at": "{timestamp}",
+    "updated-at": "{timestamp}",
+    "movie-genre": [
+      {
+        "id": 8,
+        "name": "{genre-name}",
+        "_links": [
+          {
+            "self": {
+              "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/8"
+            }
+          }
+        ]
+      }
+    ],
+    "_links": [
+      {
+        "self": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/movies/2"
+        }
+      }
+    ]
+  }
+]
+```
+
+#### Retrieve movie
+
+```endpoint
+GET /v1/movies/{movie-id}
+```
+
+##### Example request
+
+```curl
+$ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/v1/movies/76'
+```
+
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| movie-id | integer | required |
+
+##### Example response
+
+```json
+{
+  "id": 1,
+  "name": "{name}",
+  "description": "{description}",
+  "image-url": "{image-url}",
+  "production-year": 2020,
+  "created-at": "{timestamp}",
+  "updated-at": "{timestamp}",
+  "movie-genre": [
+    {
+      "id": 5,
+      "name": "{genre-name}",
+      "_links": [
+        {
+          "self": {
+            "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/5"
+          }
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "{genre-name}",
+      "_links": [
+        {
+          "self": {
+            "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/6"
+          }
+        }
+      ]
+    }
+  ],
+  "_links": [
+    {
+      "self": {
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/movies/1"
+      }
+    }
+  ]
+}
+```
+
+#### Create movie
+
+```endpoint
+POST /v1/movies
+```
+
+##### Example request
+
+```curl
+$ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api/v1/movies/' \
+--data-raw '{
+    "name": "{name}",
+    "description": "{description}",
+    "production-year": 2020,
+    "image-url": "http://example.com",
+    "movie-genre": [
+        {
+            "id": 5
+        },
+        {
+            "id": 6
+        },
+        {
+            "id": 7
+        }
+    ]
+}'
+```
+
+```json
+{
+  "name": "{name}",
+  "description": "{name}",
+  "production-year": 2020,
+  "image-url": "http://example.com",
+  "movie-genre": [
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
+    }
+  ]
+}
+```
+
+###### Body parameters
+
+| property        | type                |          |
+| --------------- | ------------------- | -------- |
+| name            | string              | required |
+| description     | string              | required |
+| production-year | integer             | required |
+| image-url       | string              | required |
+| movie-genre     | (list of genre-ids) | optional |
+
+##### Example response
+
+```json
+{
+  "id": 1,
+  "name": "{name}",
+  "description": "{description}",
+  "image-url": "http://example.com",
+  "production-year": 2020,
+  "movie-genre": [
+    {
+      "id": 5,
+      "name": "{name}"
+    },
+    {
+      "id": 6,
+      "name": "{name}"
+    },
+    {
+      "id": 7,
+      "name": "{name}"
+    }
+  ],
+  "_links": [
+    {
+      "self": {
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/movies/1"
+      }
+    }
+  ]
+}
+```
+
+#### Update movie
+
+```endpoint
+PUT /v1/movies/{movie-id}
+```
+
+##### Example request
+
+```curl
+$ curl --location --request PUT 'https://azure-movies-api.azurewebsites.net/api/v1/movies/1' \
+--data-raw '{
+	"id":463,
+    "name": "{name}",
+    "description": "{description}",
+    "production-year": 2020,
+    "image-url": "http://example.com",
+    "movie-genre": [
+        {
+            "id": 7
+        },
+        {
+            "id": 8
+        }
+    ]
+}'
+```
+
+```json
+{
+	"id":463
+    "name": "{name}",
+    "description": "{description}",
+    "production-year": 2020,
+    "image-url": "http://example.com",
+    "movie-genre": [
+        {
+            "id": 7
+        },
+        {
+            "id": 8
+        }
+    ]
+}
+```
+
+###### Body parameters
+
+| property        | type                |          |
+| --------------- | ------------------- | -------- |
+| id              | integer             | required |
+| name            | string              | required |
+| description     | string              | required |
+| production-year | integer             | required |
+| image-url       | string              | required |
+| movie-genre     | (list of genre-ids) | optional |
+
+##### Example response
+
+```json
+{
+  "id": 1,
+  "name": "{name}",
+  "description": "{description}",
+  "image-url": "http://example.com",
+  "production-year": 2020,
+  "created-at": "{timestamp}",
+  "updated-at": "{timestamp}",
+  "movie-genre": [
+    {
+      "id": 7,
+      "name": "{name}"
+    },
+    {
+      "id": 8,
+      "name": "{name}"
+    }
+  ],
+  "_links": [
+    {
+      "self": {
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/movies/1"
+      }
+    }
+  ]
+}
+```
+
+#### Delete movie
+
+```endpoint
+DELETE /v1/movies/{movie-id}
+```
+
+##### Example request
+
+```curl
+$ curl --location --request DELETE 'https://azure-movies-api.azurewebsites.net/api/v1/movies/1'
+```
+
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| movie-id | integer | required |
+
+##### Example response
+
+```json
+{
+  "id": 1
+}
+```
+
+### Actors
+
+#### List actors
+
+```endpoint
+GET /v1/actors
+```
+
+##### Example request
+
+```curl
+$ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/v1/actors'
+```
+
+##### Example response
+
+```json
+[
+  {
+    "id": 6,
+    "first-name": "{first-name}",
+    "last-name": "{last-name}",
+    "created-at": "{timestamp}",
+    "updated-at": "{timestamp}",
+    "_links": [
+      {
+        "self": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/6"
+        }
+      },
+      {
+        "roles": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/6/roles"
+        }
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "first-name": "{first-name}",
+    "last-name": "{last-name}",
+    "created-at": "{timestamp}",
+    "updated-at": "{timestamp}",
+    "_links": [
+      {
+        "self": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/7"
+        }
+      },
+      {
+        "roles": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/7/roles"
+        }
+      }
+    ]
+  }
+]
+```
+
+#### Retrieve actor
+
+```endpoint
+GET /v1/actors/{actor-id}
+```
+
+##### Example request
+
+```curl
+$ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/v1/actors/6'
+```
+
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| actor-id | integer | required |
+
+##### Example response
+
+```json
+{
+  "id": 6,
+  "first-name": "{first-name}",
+  "last-name": "{last-name}",
+  "created-at": "{timestamp}",
+  "updated-at": "{timestamp}",
+  "_links": [
+    {
+      "self": {
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/6"
+      }
+    },
+    {
+      "roles": {
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/6/roles"
+      }
+    }
+  ]
+}
+```
+
+#### Create actor
+
+```endpoint
+POST /v1/actors
+```
+
+##### Example request
+
+```curl
+$ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api/v1/actors' \
+--data-raw '{
+    "first-name": "{first-name}",
+    "last-name": "{last-name}"
+}'
+```
+
+###### Body parameters
+
+| property   | type   |          |
+| ---------- | ------ | -------- |
+| first-name | string | required |
+| last-name  | string | optional |
+
+##### Example response
+
+```json
+{
+  "id": 1,
+  "first-name": "{first-name}",
+  "last-name": "{last-name}",
+  "created-at": "{timestamp}",
+  "_links": [
+    {
+      "self": {
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/1"
+      }
+    }
+  ]
+}
+```
+
+#### Update actor
+
+```endpoint
+PUT /v1/actors/{actor-id}
+```
+
+##### Example request
+
+```curl
+$ curl --location --request PUT 'https://azure-movies-api.azurewebsites.net/api/v1/actors/15' \
+--data-raw '{
+    "first-name": "{first-name}",
+    "last-name": "{last-name}"
+}'
+```
+
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| actor-id | integer | required |
+
+```json
+{
+  "first-name": "{first-name}",
+  "last-name": "{last-name}"
+}
+```
+
+###### Body parameters
+
+| property   | type   |          |
+| ---------- | ------ | -------- |
+| first-name | string | required |
+| last-name  | string | optional |
+
+##### Example response
+
+```json
+{
+  "id": 15,
+  "first-name": "{first-name}",
+  "last-name": "{last-name}",
+  "created-at": "{timestamp}",
+  "updated-at": "{timestamp}",
+  "_links": [
+    {
+      "self": {
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/15"
+      }
+    }
+  ]
+}
+```
+
+#### Delete actor
+
+```endpoint
+DELETE /v1/actors/{actor-id}
+```
+
+##### Example request
+
+```curl
+$ curl --location --request DELETE 'https://azure-movies-api.azurewebsites.net/api/v1/actors/15'
+```
+
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| actor-id | integer | required |
+
+##### Example response
+
+```json
+{
+  "id": 15
+}
+```
+
+### Roles
+
+#### List actor roles
+
+```endpoint
+GET /v1/actors/{actor-id}/roles
+```
+
+##### Example request
+
+```curl
+curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/v1/actors/6/roles'
+```
+
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| actor-id | integer | required |
+
+###### Example response
+
+```json
+[
+  {
+    "id": 10,
+    "name": "{name}",
+    "movie-id": 76,
+    "actor-id": 6,
+    "_links": [
+      {
+        "movie": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/movies/76"
+        }
+      },
+      {
+        "actor": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/6"
+        }
+      }
+    ]
+  }
+]
+```
+
+#### List actor roles for a particular movie
+
+```endpoint
+GET /v1/actors/{actor-id}/roles/{movie-id}
+```
+
+##### Example request
+
+```curl
+$ curl --location --request GET 'http://azure-movies-api.azurewebsites.net/api/v1/actors/6/roles/76'
+```
+
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| actor-id | integer | required |
+| movie-id | integer | required |
+
+###### Example response
+
+```json
+[
+  {
+    "id": 10,
+    "name": "{name}",
+    "movie-id": 76,
+    "actor-id": 6,
+    "_links": [
+      {
+        "movie": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/movies/76"
+        }
+      },
+      {
+        "actor": {
+          "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/6"
+        }
+      }
+    ]
+  }
+]
+```
+
+#### Create role
+
+```endpoint
+POST /v1/actors/{actor-id}/roles/{movie-id}
+```
+
+##### Example request
+
+```curl
+$ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api/v1/actors/16/roles/77' \
+--data-raw '{
+    "name": "{name}"
+}'
+```
+
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| actor-id | integer | required |
+| movie-id | integer | required |
+
+```json
+{
+  "name": "{name}"
+}
+```
+
+###### Body parameters
+
+| property | type   |          |
+| -------- | ------ | -------- |
+| name     | string | required |
+
+##### Example response
+
+```json
+{
+  "id": 26,
+  "name": "{name}",
+  "movie-id": 77,
+  "actor-id": 16,
+  "_links": [
+    {
+      "movie": {
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/movies/77"
+      }
+    },
+    {
+      "actor": {
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/16"
+      }
+    }
+  ]
+}
+```
+
+#### Delete role
+
+```endpoint
+DELETE /v1/actors/{actor-id}/roles/{movie-id}/{role-id}
+```
+
+##### Example request
+
+```curl
+$ curl --location --request DELETE 'https://azure-movies-api.azurewebsites.net/api/v1/actors/16/roles/77/26'
+```
+
+###### Path parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| actor-id | integer | required |
+| movie-id | integer | required |
+| role-id  | integer | required |
+
+##### Example response
+
+```json
+{
+  "movie-id": 77,
+  "actor-id": 16,
+  "_links": [
+    {
+      "movie": {
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/movies/77"
+      }
+    },
+    {
+      "actor": {
+        "href": "https://azure-movies-api.azurewebsites.net/api/v1/actors/16"
+      }
+    }
+  ]
 }
 ```
 
