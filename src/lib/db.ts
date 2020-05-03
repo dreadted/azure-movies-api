@@ -7,10 +7,21 @@ const pascalCase = (str: string | undefined) => {
   return upperFirst(camelCase(str));
 };
 
-export const exec = async <T extends {}>(
+interface Exec {
+  <T>(model: string, procedure: string, params: T | undefined): Promise<T>;
+
+  <T>(
+    model: string,
+    procedure: string,
+    params: T | undefined,
+    getCollection: boolean
+  ): Promise<T[]>;
+}
+
+export const exec: Exec = async <T>(
   model: string,
   procedure: string,
-  params?: any,
+  params?: T,
   getCollection?: boolean
 ) => {
   const pool = await sql.connect(config);
@@ -24,7 +35,6 @@ export const exec = async <T extends {}>(
     }
   }
   const result = await request.execute(`dbo.usp_${procedure}_${model}`);
-  // TODO: Try to identify if T is array type
   if (getCollection)
     return result.recordset.map((record: any) =>
       convertKeys(record, camelCase, model)

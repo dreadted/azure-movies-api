@@ -51,12 +51,12 @@ export const readOne = async (input: Movie) => {
   if (genres && genres.length)
     data.movieGenre = genres.map((genre: MovieGenre.MovieGenre) => {
       return { id: genre.genreId, name: genre.genreName };
-    });
+    }) as Genre[];
   return data;
 };
 
 export const readAll = async () => {
-  const data = await db.exec<Movie[]>("Movie", "Read", undefined, true);
+  const data = await db.exec<Movie>("Movie", "Read", undefined, true);
   if (data && data.length) {
     const genres = await MovieGenre.readAll({});
     if (genres && genres.length) {

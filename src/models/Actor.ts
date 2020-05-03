@@ -22,14 +22,14 @@ export const readOne = async (input: Actor) => {
 };
 
 export const readAll = async () => {
-  const data = await db.exec<Actor[]>("Actor", "Read", undefined, true);
+  const data = await db.exec<Actor>("Actor", "Read", undefined, true);
   return data;
 };
 
 export const update = async (input: Actor) => {
   const { firstName, lastName } = input;
   const data = await db.exec<Actor>("Actor", "Update", {
-    actorId: input.id,
+    id: input.id,
     firstName,
     lastName
   });

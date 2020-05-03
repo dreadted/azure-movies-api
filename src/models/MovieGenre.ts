@@ -1,8 +1,8 @@
 import * as db from "../lib/db";
 
 export type MovieGenre = {
-  movieId?: number;
-  genreId?: number;
+  movieId?: number | null;
+  genreId?: number | null;
   genreName?: string;
 };
 
@@ -17,7 +17,7 @@ export const create = async (input: MovieGenre) => {
 export const readAll = async (input: MovieGenre) => {
   const movieId = input.movieId || null;
   const genreId = input.genreId || null;
-  const data = await db.exec<MovieGenre[]>(
+  const data = await db.exec<MovieGenre>(
     "MovieGenre",
     "Read",
     { movieId, genreId },

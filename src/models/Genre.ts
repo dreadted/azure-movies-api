@@ -19,7 +19,7 @@ export const readOne = async (input: Genre) => {
 };
 
 export const readAll = async () => {
-  const data = await db.exec<Genre[]>("Genre", "Read", undefined, true);
+  const data = await db.exec<Genre>("Genre", "Read", undefined, true);
   return data;
 };
 
