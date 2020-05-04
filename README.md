@@ -45,13 +45,7 @@ npm run dev
 
 2. Go to Azure Extension / App Service and click &#xFF0B; sign to Create New Web App... Choose name and platform (Windows)
 
-~~3. Open your new App Service tree structure by clicking &rsaquo; and got to Deployments / Connect to a GitHub Repository...
-
-- Choose organization (Your username on GitHub)
-- Choose repository (Must be public?)
-  _TODO: Insert solution to this question! There might be an answer in [this Microsoft tutorial](https://docs.microsoft.com/sv-se/azure/javascript/tutorial-vscode-azure-app-service-node-01?tabs=bash). For now &ndash; let's jump over to Azure Portal instead:_~~
-
-4. Go to [Azure Portal](https://portal.azure.com/) and click "App Services" to find your new App Service:
+3. Go to [Azure Portal](https://portal.azure.com/) and click "App Services" to find your new App Service:
 
    - Click _Deployment Center_ under _Deployment_, choose _GitHub_ under _Continous Deployment_ and click _Authorize_
    - Log in to your GitHub account and click _Continue_
@@ -59,7 +53,9 @@ npm run dev
    - Choose organization (your GitHub profile name), Repository and master branch
    - Click _Countinue_ and _Finish_. Automatic deployment is now activated.
 
-5. Change your `package.json` setting to:
+   Alternatives: Deploy using [Azure CLI](https://docs.microsoft.com/sv-se/azure/javascript/tutorial-vscode-azure-cli-node-01) or [Visual Studio Code](https://docs.microsoft.com/sv-se/azure/javascript/tutorial-vscode-azure-app-service-node-01)
+
+4. Change your `package.json` setting to:
 
 ```json
 ...
@@ -70,21 +66,21 @@ npm run dev
 ...
 ```
 
-6. Make sure typescript and @types/... are all in your `package.json` dependencies (`npm install ... --save`)
+5. Make sure typescript and @types/... are all in your `package.json` dependencies (`npm install ... --save`)
 
-7. Install the kuduscript tool globally ([source](http://codereform.com/blog/post/nodejs-azure-web-app-continuous-delivery-via-github-and-some-kudu-magic/))
+6. Install the kuduscript tool globally ([source](http://codereform.com/blog/post/nodejs-azure-web-app-continuous-delivery-via-github-and-some-kudu-magic/))
 
 ```sh
 npm install kuduscript -g
 ```
 
-8. After installing Kuduscript, open a CMD window on your application’s root and type the following command to generate files `.deployment` and `deploy.cmd` in your application root directory (mind the dot: `.`):
+7. After installing Kuduscript, open a CMD window on your application’s root and type the following command to generate files `.deployment` and `deploy.cmd` in your application root directory (mind the dot: `.`):
 
 ```
 kuduscript -y --node --sitePath .
 ```
 
-9. Look for these lines in `deploy.cmd`
+8. Look for these lines in `deploy.cmd`
 
 ```cmd
 :: 3. Install npm packages
@@ -103,7 +99,7 @@ and add the following directly after them: ([source](http://codefoster.com/tscaz
 echo Transpiling TypeScript in %DEPLOYMENT_TARGET%...call :ExecuteCmd node %DEPLOYMENT_TARGET%\node_modules\typescript\bin\tsc -p "%DEPLOYMENT_TARGET%"
 ```
 
-10. Make the following changes to `web.config` in order to point Node to your `outDir` directory setting in `tsconfig.json`:
+9. Make the following changes to `web.config` in order to point Node to your `outDir` directory setting in `tsconfig.json`:
 
 ```xml
 ...
@@ -119,7 +115,7 @@ echo Transpiling TypeScript in %DEPLOYMENT_TARGET%...call :ExecuteCmd node %DEPL
 </rule>
 ```
 
-11. Make the following change to `web.config` in order to make your Node app catch any http errors (`404` and `500` e.g.): ([source](https://stackoverflow.com/questions/19555187/node-js-on-azure-websites-404-error))
+10. Make the following change to `web.config` in order to make your Node app catch any http errors (`404` and `500` e.g.): ([source](https://stackoverflow.com/questions/19555187/node-js-on-azure-websites-404-error))
 
 ```xml
 ...
