@@ -16,6 +16,13 @@ interface Exec {
     params: T | undefined,
     getCollection: boolean
   ): Promise<T[]>;
+
+  <T, K>(
+    model: string,
+    procedure: string,
+    params: K | undefined,
+    getCollection: boolean
+  ): Promise<T[]>;
 }
 
 export const exec: Exec = async <T>(

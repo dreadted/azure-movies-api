@@ -26,7 +26,17 @@ export const readOne: RequestHandler = async (
     const id = parseInt(req.params.id);
     if (id) {
       const data = await Genre.readOne({ id });
-      if (data) res.status(200).json(createResponse(data, req));
+      if (data)
+        res.status(200).json(
+          createResponse(data, req, [
+            {
+              rel: "movies",
+              href: "/movies?genreId=",
+              fromParent: false,
+              query: true
+            }
+          ])
+        );
       else next({ status: 404, message: `Genre with id [${id}] not found.` });
     }
   } catch (err) {
@@ -43,9 +53,18 @@ export const readAll = async (
   try {
     const data = await Genre.readAll();
     if (data && data.length)
-      res
-        .status(200)
-        .json(data.map((document: any) => createResponse(document, req)));
+      res.status(200).json(
+        data.map((document: any) =>
+          createResponse(document, req, [
+            {
+              rel: "movies",
+              href: "/movies?genreId=",
+              fromParent: false,
+              query: true
+            }
+          ])
+        )
+      );
     else next({ status: 404, message: "No genres found." });
   } catch (err) {
     next(err);
@@ -63,7 +82,17 @@ export const update: RequestHandler = async (
     const input = req.body;
 
     const data = await Genre.update({ id, name: input.name });
-    if (data) res.status(200).json({ ...createResponse(data, req) });
+    if (data)
+      res.status(200).json({
+        ...createResponse(data, req, [
+          {
+            rel: "movies",
+            href: "/movies?genreId=",
+            fromParent: false,
+            query: true
+          }
+        ])
+      });
     else next({ status: 404, message: `Genre with id [${id}] not found.` });
   } catch (err) {
     next(err);

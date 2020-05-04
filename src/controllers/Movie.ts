@@ -66,7 +66,8 @@ export const readAll = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const data = await Movie.readAll();
+    const genreId = parseInt(req.query.genreId as string);
+    const data = await Movie.readAll({ genreId });
     if (data && data.length) {
       data.forEach(
         item =>

@@ -39,6 +39,7 @@ export type HATEOAS = {
   rel: string;
   href: string;
   fromParent?: boolean;
+  query?: boolean;
 };
 
 export type Link = {
@@ -76,6 +77,7 @@ export const createResponse = (
         (item.fromParent
           ? `${url}/${document.id || ""}`
           : `${parentURL(url, 0)}`) + item.href || "";
+      item.href += item.query ? document.id : "";
       const link: Link = {};
       link[item.rel] = { href: item.href };
       links.push(link);

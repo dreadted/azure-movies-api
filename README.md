@@ -352,14 +352,20 @@ $ curl --location --request DELETE 'https://azure-movies-api.azurewebsites.net/a
 #### List movies
 
 ```endpoint
-GET /v1/movies
+GET /v1/movies?genreId={genre-id}
 ```
 
 ##### Example request
 
 ```curl
-$ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/v1/movies'
+$ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/v1/movies?genreId=5'
 ```
+
+###### Query parameters
+
+| property | type    |          |
+| -------- | ------- | -------- |
+| genre-id | integer | optional |
 
 ##### Example response
 
@@ -419,12 +425,12 @@ $ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/
     "updated-at": "{timestamp}",
     "movie-genre": [
       {
-        "id": 8,
+        "id": 5,
         "name": "{genre-name}",
         "_links": [
           {
             "self": {
-              "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/8"
+              "href": "https://azure-movies-api.azurewebsites.net/api/v1/genres/5"
             }
           }
         ]

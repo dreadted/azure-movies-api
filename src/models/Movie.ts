@@ -55,8 +55,14 @@ export const readOne = async (input: Movie) => {
   return data;
 };
 
-export const readAll = async () => {
-  const data = await db.exec<Movie>("Movie", "Read", undefined, true);
+export const readAll = async (input?: MovieGenre.MovieGenre) => {
+  const genreId = input?.genreId || undefined;
+  const data = await db.exec<Movie, MovieGenre.MovieGenre>(
+    "Movie",
+    "Read",
+    { genreId },
+    true
+  );
   if (data && data.length) {
     const genres = await MovieGenre.readAll({});
     if (genres && genres.length) {
