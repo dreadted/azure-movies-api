@@ -1,15 +1,6 @@
 import * as Movie from "../models/Movie";
 import { body, checkSchema } from "express-validator";
 
-export const validateMovieId = [
-  body("id").custom(async (value: number) => {
-    const data = await Movie.readOne({ id: value });
-    if (!data) {
-      return Promise.reject(`No Movie matching id [${value}].`);
-    } else return true;
-  })
-];
-
 export const validateMovie = checkSchema({
   id: {
     in: ["params", "body"],

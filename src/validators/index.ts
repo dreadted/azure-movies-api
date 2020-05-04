@@ -4,7 +4,7 @@ import { check, body, param, validationResult } from "express-validator";
 import { capitalize } from "../lib/utils";
 
 export { validateGenreId } from "./Genre";
-export { validateMovieId, validateMovie } from "./Movie";
+export { validateMovie } from "./Movie";
 
 export const validateId = [
   body("id").not().isEmpty().bail(),
