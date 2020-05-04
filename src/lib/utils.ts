@@ -41,7 +41,7 @@ export type HATEOAS = {
   fromParent?: boolean;
 };
 
-type Link = {
+export type Link = {
   [key: string]: { href: string };
 };
 

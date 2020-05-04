@@ -54,7 +54,7 @@ export const readAll = async (
       res
         .status(200)
         .json(
-          data.map((document: Actor.Actor) =>
+          data.map(document =>
             createResponse(document, req, [
               { rel: "roles", href: "/roles", fromParent: true }
             ])

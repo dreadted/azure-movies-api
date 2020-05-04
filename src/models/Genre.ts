@@ -1,9 +1,10 @@
 import * as db from "../lib/db";
+import { Link } from "../lib/utils";
 
 export type Genre = {
   id?: number;
   name?: string;
-  _links?: any;
+  _links?: Link[];
 };
 
 export const create = async (input: Genre) => {

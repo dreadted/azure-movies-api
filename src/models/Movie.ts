@@ -49,7 +49,7 @@ export const readOne = async (input: Movie) => {
   const data = await db.exec<Movie>("Movie", "Read", { id });
   const genres = await MovieGenre.readAll({ movieId: id });
   if (genres && genres.length)
-    data.movieGenre = genres.map((genre: MovieGenre.MovieGenre) => {
+    data.movieGenre = genres.map(genre => {
       return { id: genre.genreId, name: genre.genreName };
     }) as Genre[];
   return data;
@@ -63,12 +63,10 @@ export const readAll = async () => {
       data.forEach(
         (movie: Movie) =>
           (movie.movieGenre = genres
-            .filter(
-              (genre: MovieGenre.MovieGenre) => genre.movieId === movie.id
-            )
-            .map((genre: any) => {
+            .filter(genre => genre.movieId === movie.id)
+            .map(genre => {
               return { id: genre.genreId, name: genre.genreName };
-            }))
+            }) as Genre[])
       );
     }
   }
