@@ -9,7 +9,9 @@
     "dev:build": "tsc -w",
     "dev:run": "nodemon -r dotenv/config build/server.js",
     "dev": "concurrently npm:dev:*",
-    "postinstall": "tsc"
+    "postinstall": "tsc",
+    "test": "cross-env NODE_ENV=test jest --setupFiles dotenv/config",
+    "test:watch": "cross-env NODE_ENV=test jest --setupFiles dotenv/config --watch"
   },
   "repository": {
     "type": "git",
@@ -38,7 +40,21 @@
     "tedious": "^8.3.0",
     "typescript": "^3.8.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@types/supertest": "^2.0.9",
+    "cross-env": "^7.0.2",
+    "jest": "^25.5.4",
+    "supertest": "^4.0.2",
+    "ts-jest": "^25.4.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/build/"
+    ]
+  },
   "nodemonConfig": {
     "restartable": "rs",
     "delay": "2500",
