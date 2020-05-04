@@ -57,71 +57,71 @@ npm run dev
 
 4. Change your `package.json` setting to:
 
-```json
-...
-"scripts": {
-    "start":"node build/server.js",
-    "postinstall": "tsc"
-  }
-...
-```
+   ```json
+   ...
+   "scripts": {
+       "start":"node build/server.js",
+       "postinstall": "tsc"
+     }
+   ...
+   ```
 
 5. Make sure typescript and @types/... are all in your `package.json` dependencies (`npm install ... --save`)
 
 6. Install the kuduscript tool globally ([source](http://codereform.com/blog/post/nodejs-azure-web-app-continuous-delivery-via-github-and-some-kudu-magic/))
 
-```sh
-npm install kuduscript -g
-```
+   ```sh
+   npm install kuduscript -g
+   ```
 
 7. After installing Kuduscript, open a CMD window on your application’s root and type the following command to generate files `.deployment` and `deploy.cmd` in your application root directory (mind the dot: `.`):
 
-```
-kuduscript -y --node --sitePath .
-```
+   ```
+   kuduscript -y --node --sitePath .
+   ```
 
 8. Look for these lines in `deploy.cmd`
 
-```cmd
-:: 3. Install npm packages
-IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
-  pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd !NPM_CMD! install --production
-  IF !ERRORLEVEL! NEQ 0 goto error
-  popd
-)
-```
+   ```cmd
+   :: 3. Install npm packages
+   IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
+     pushd "%DEPLOYMENT_TARGET%"
+     call :ExecuteCmd !NPM_CMD! install --production
+     IF !ERRORLEVEL! NEQ 0 goto error
+     popd
+   )
+   ```
 
-and add the following directly after them: ([source](http://codefoster.com/tscazure/))
+   and add the following directly after them: ([source](http://codefoster.com/tscazure/))
 
-```cmd
-:: 4. Compile TypeScript
-echo Transpiling TypeScript in %DEPLOYMENT_TARGET%...call :ExecuteCmd node %DEPLOYMENT_TARGET%\node_modules\typescript\bin\tsc -p "%DEPLOYMENT_TARGET%"
-```
+   ```cmd
+   :: 4. Compile TypeScript
+   echo Transpiling TypeScript in %DEPLOYMENT_TARGET%...call :ExecuteCmd node %DEPLOYMENT_TARGET%\node_modules\typescript\bin\tsc -p "%DEPLOYMENT_TARGET%"
+   ```
 
 9. Make the following changes to `web.config` in order to point Node to your `outDir` directory setting in `tsconfig.json`:
 
-```xml
-...
-<handlers>
-  <add name="iisnode" path="build/server.js" verb="*" modules="iisnode"/>
-</handlers>
-...
-<rule name="DynamicContent">
-  <conditions>
-    <add input="{{REQUEST_FILENAME}}" matchType="IsFile" negate="True"/>
-  </conditions>
-  <action type="Rewrite" url="build/server.js"/>
-</rule>
-```
+   ```xml
+   ...
+   <handlers>
+     <add name="iisnode" path="build/server.js" verb="*" modules="iisnode"/>
+   </handlers>
+   ...
+   <rule name="DynamicContent">
+     <conditions>
+       <add input="{{REQUEST_FILENAME}}" matchType="IsFile" negate="True"/>
+     </conditions>
+     <action type="Rewrite" url="build/server.js"/>
+   </rule>
+   ```
 
 10. Make the following change to `web.config` in order to make your Node app catch any http errors (`404` and `500` e.g.): ([source](https://stackoverflow.com/questions/19555187/node-js-on-azure-websites-404-error))
 
-```xml
-...
-<httpErrors existingResponse="PassThrough"/>
-...
-```
+    ```xml
+    ...
+    <httpErrors existingResponse="PassThrough"/>
+    ...
+    ```
 
 ## API Reference
 
