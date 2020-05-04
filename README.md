@@ -1,6 +1,6 @@
 # Azure Movies API
 
-> My first Azure REST API
+REST API built with [Express.js](https://expressjs.com/) exposing an [Azure SQL Database](https://azure.microsoft.com/services/sql-database/) via [Azure App Service](https://azure.microsoft.com/services/app-service/).
 
 ## Contents
 
@@ -23,21 +23,29 @@
 
 1. Clone the repo
 
-```sh
-git clone https://github.com/dreadnallen/azure-movies-api.git
-```
+   ```sh
+   git clone https://github.com/dreadnallen/azure-movies-api.git
+   ```
 
 2. Install NPM packages
 
-```sh
-npm install
-```
+   ```sh
+   npm install
+   ```
 
-3. Run in development mode
+3. Add environment variables to `/.env`
 
-```sh
-npm run dev
-```
+   ```env
+   DBUser={your-username}
+   DBPassword={your-password}
+   DBServer={your-servername.database.windows.net}
+   ```
+
+4. Run in development mode
+
+   ```sh
+   npm run dev
+   ```
 
 ## Deploy to Azure App Services
 
@@ -52,6 +60,7 @@ npm run dev
    - Click _App Service Build Service_ and click _Continue_
    - Choose organization (your GitHub profile name), Repository and master branch
    - Click _Countinue_ and _Finish_. Automatic deployment is now activated.
+   - Click _Configuration_ under _Settings_ and click _New application setting_ to add environment variables `DBUser`, `DBPassword` and `DBServer`.
 
    Alternatives: Deploy using [Azure CLI](https://docs.microsoft.com/sv-se/azure/javascript/tutorial-vscode-azure-cli-node-01) or [Visual Studio Code](https://docs.microsoft.com/sv-se/azure/javascript/tutorial-vscode-azure-app-service-node-01)
 
