@@ -45,11 +45,11 @@ npm run dev
 
 2. Go to Azure Extension / App Service and click &#xFF0B; sign to Create New Web App... Choose name and platform (Windows)
 
-3. Open your new App Service tree structure by clicking &rsaquo; and got to Deployments / Connect to a GitHub Repository...
+~~3. Open your new App Service tree structure by clicking &rsaquo; and got to Deployments / Connect to a GitHub Repository...
 
-   - Choose organization (Your username on GitHub)
-   - Choose repository (Must be public?)
-     _TODO: Insert solution to this question! There might be an answer in [this Microsoft tutorial](https://docs.microsoft.com/sv-se/azure/javascript/tutorial-vscode-azure-app-service-node-01?tabs=bash). For now &ndash; let's jump over to Azure Portal instead:_
+- Choose organization (Your username on GitHub)
+- Choose repository (Must be public?)
+  _TODO: Insert solution to this question! There might be an answer in [this Microsoft tutorial](https://docs.microsoft.com/sv-se/azure/javascript/tutorial-vscode-azure-app-service-node-01?tabs=bash). For now &ndash; let's jump over to Azure Portal instead:_~~
 
 4. Go to [Azure Portal](https://portal.azure.com/) and click "App Services" to find your new App Service:
 
@@ -145,6 +145,10 @@ $ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/
 
 ##### Example response
 
+```http
+200 - OK
+```
+
 ```json
 [
   {
@@ -196,6 +200,10 @@ $ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/
 
 ##### Example response
 
+```http
+200 - OK
+```
+
 ```json
 {
   "id": 1,
@@ -227,6 +235,8 @@ $ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api
 }'
 ```
 
+###### Request body
+
 ```json
 {
   "name": "{name}"
@@ -240,6 +250,10 @@ $ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api
 | name     | string | required |
 
 ##### Example response
+
+```http
+201 - Created
+```
 
 ```json
 {
@@ -269,6 +283,8 @@ $ curl --location --request PUT 'https://azure-movies-api.azurewebsites.net/api/
 | -------- | ------- | -------- |
 | genre-id | integer | required |
 
+###### Request body
+
 ```json
 {
   "name": "{name}"
@@ -282,6 +298,10 @@ $ curl --location --request PUT 'https://azure-movies-api.azurewebsites.net/api/
 | name     | string | required |
 
 ##### Example response
+
+```http
+200 - OK
+```
 
 ```json
 {
@@ -312,6 +332,10 @@ $ curl --location --request DELETE 'https://azure-movies-api.azurewebsites.net/a
 
 ##### Example response
 
+```http
+200 - OK
+```
+
 ```json
 {
   "id": 1
@@ -333,6 +357,10 @@ $ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/
 ```
 
 ##### Example response
+
+```http
+200 - OK
+```
 
 ```json
 [
@@ -428,6 +456,10 @@ $ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/
 
 ##### Example response
 
+```http
+200 - OK
+```
+
 ```json
 {
   "id": 1,
@@ -500,6 +532,8 @@ $ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api
 }'
 ```
 
+###### Request body
+
 ```json
 {
   "name": "{name}",
@@ -531,6 +565,10 @@ $ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api
 | movie-genre     | (list of genre-ids) | optional |
 
 ##### Example response
+
+```http
+201 - Created
+```
 
 ```json
 {
@@ -590,21 +628,23 @@ $ curl --location --request PUT 'https://azure-movies-api.azurewebsites.net/api/
 }'
 ```
 
+###### Request body
+
 ```json
 {
-	"id":463
-    "name": "{name}",
-    "description": "{description}",
-    "production-year": 2020,
-    "image-url": "http://example.com",
-    "movie-genre": [
-        {
-            "id": 7
-        },
-        {
-            "id": 8
-        }
-    ]
+  "id": 463,
+  "name": "{name}",
+  "description": "{description}",
+  "production-year": 2020,
+  "image-url": "http://example.com",
+  "movie-genre": [
+    {
+      "id": 7
+    },
+    {
+      "id": 8
+    }
+  ]
 }
 ```
 
@@ -620,6 +660,10 @@ $ curl --location --request PUT 'https://azure-movies-api.azurewebsites.net/api/
 | movie-genre     | (list of genre-ids) | optional |
 
 ##### Example response
+
+```http
+200 - OK
+```
 
 ```json
 {
@@ -670,6 +714,10 @@ $ curl --location --request DELETE 'https://azure-movies-api.azurewebsites.net/a
 
 ##### Example response
 
+```http
+200 - OK
+```
+
 ```json
 {
   "id": 1
@@ -691,6 +739,10 @@ $ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/
 ```
 
 ##### Example response
+
+```http
+200 - OK
+```
 
 ```json
 [
@@ -755,6 +807,10 @@ $ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/
 
 ##### Example response
 
+```http
+200 - OK
+```
+
 ```json
 {
   "id": 6,
@@ -793,6 +849,15 @@ $ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api
 }'
 ```
 
+###### Request body
+
+```json
+{
+  "first-name": "{first-name}",
+  "last-name": "{last-name}"
+}
+```
+
 ###### Body parameters
 
 | property   | type   |          |
@@ -801,6 +866,10 @@ $ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api
 | last-name  | string | optional |
 
 ##### Example response
+
+```http
+201 - Created
+```
 
 ```json
 {
@@ -840,6 +909,8 @@ $ curl --location --request PUT 'https://azure-movies-api.azurewebsites.net/api/
 | -------- | ------- | -------- |
 | actor-id | integer | required |
 
+###### Request body
+
 ```json
 {
   "first-name": "{first-name}",
@@ -855,6 +926,10 @@ $ curl --location --request PUT 'https://azure-movies-api.azurewebsites.net/api/
 | last-name  | string | optional |
 
 ##### Example response
+
+```http
+200 - OK
+```
 
 ```json
 {
@@ -893,6 +968,10 @@ $ curl --location --request DELETE 'https://azure-movies-api.azurewebsites.net/a
 
 ##### Example response
 
+```http
+200 - OK
+```
+
 ```json
 {
   "id": 15
@@ -920,6 +999,10 @@ curl --location --request GET 'https://azure-movies-api.azurewebsites.net/api/v1
 | actor-id | integer | required |
 
 ###### Example response
+
+```http
+200 - OK
+```
 
 ```json
 [
@@ -964,6 +1047,10 @@ $ curl --location --request GET 'http://azure-movies-api.azurewebsites.net/api/v
 | movie-id | integer | required |
 
 ###### Example response
+
+```http
+200 - OK
+```
 
 ```json
 [
@@ -1010,6 +1097,8 @@ $ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api
 | actor-id | integer | required |
 | movie-id | integer | required |
 
+###### Request body
+
 ```json
 {
   "name": "{name}"
@@ -1023,6 +1112,10 @@ $ curl --location --request POST 'https://azure-movies-api.azurewebsites.net/api
 | name     | string | required |
 
 ##### Example response
+
+```http
+201 - Created
+```
 
 ```json
 {
@@ -1066,6 +1159,10 @@ $ curl --location --request DELETE 'https://azure-movies-api.azurewebsites.net/a
 | role-id  | integer | required |
 
 ##### Example response
+
+```http
+200 - OK
+```
 
 ```json
 {
