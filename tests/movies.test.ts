@@ -1,6 +1,5 @@
 import request from "supertest";
 import app from "../src/app";
-import { Movie } from "../src/models/Movie";
 
 describe("GET /api/v1/movies", () => {
   test("should return movies.", async () => {
@@ -14,7 +13,13 @@ describe("GET /api/v1/movies", () => {
           description: expect.any(String),
           ["image-url"]: expect.stringContaining("http"),
           ["production-year"]: expect.any(Number),
-          ["created-at"]: expect.any(String)
+          ["created-at"]: expect.any(String),
+          ["movie-genre"]: expect.arrayContaining([]),
+          _links: expect.arrayContaining([
+            expect.objectContaining({
+              self: { href: expect.stringContaining("http") }
+            })
+          ])
         })
       ])
     );
@@ -29,10 +34,10 @@ describe("POST /api/v1/movies", () => {
     ["production-year"]: 1900
   };
 
-  test("should return formatted genre with status code 201", async () => {
+  test("should return formatted movie with status code 201", async () => {
     const res = await request(app).post("/api/v1/movies").send(testMovie);
     expect(res.status).toEqual(201);
-    expect(res.body).toEqual(expect.objectContaining({ name: "Test Movie" }));
+    expect(res.body).toEqual(expect.objectContaining(testMovie));
   });
 });
 
@@ -47,7 +52,7 @@ describe("PUT /api/v1/movies/108", () => {
   test("should return updated value", async () => {
     const res = await request(app).put("/api/v1/movies/108").send(testMovie);
     expect(res.status).toEqual(200);
-    expect(res.body).toHaveProperty("name", "Updated Movie");
+    expect(res.body).toEqual(expect.objectContaining(testMovie));
   });
 });
 
