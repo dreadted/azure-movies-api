@@ -1,6 +1,6 @@
 {
   "name": "azure-movies-api",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "REST API built with Express.js exposing an Azure SQL Database via Azure App Service.",
   "main": "build/server.js",
   "scripts": {
