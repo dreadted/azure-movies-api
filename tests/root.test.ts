@@ -2,7 +2,7 @@ import app from "../src/app";
 import request from "supertest";
 
 describe("GET /api/v1", () => {
-  it("should have links to genres, movies and actors", async () => {
+  test("should have links to genres, movies and actors", async () => {
     const result = await request(app).get("/api/v1");
     expect(result.status).toEqual(200);
     expect(result.body).toHaveProperty("_links");
@@ -25,28 +25,28 @@ describe("GET /api/v1", () => {
 });
 
 describe("POST /api/v1", () => {
-  it("should return status code 405", async () => {
+  test("should return status code 405", async () => {
     const result = await request(app).post("/api/v1");
     expect(result.status).toEqual(405);
   });
 });
 
 describe("PUT /api/v1", () => {
-  it("should return status code 405", async () => {
+  test("should return status code 405", async () => {
     const result = await request(app).put("/api/v1");
     expect(result.status).toEqual(405);
   });
 });
 
 describe("PATCH /api/v1", () => {
-  it("should return status code 405", async () => {
+  test("should return status code 405", async () => {
     const result = await request(app).patch("/api/v1");
     expect(result.status).toEqual(405);
   });
 });
 
 describe("DELETE /api/v1", () => {
-  it("should return status code 405", async () => {
+  test("should return status code 405", async () => {
     const result = await request(app).delete("/api/v1");
     expect(result.status).toEqual(405);
   });

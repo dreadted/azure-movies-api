@@ -1,7 +1,7 @@
 {
   "name": "azure-movies-api",
   "version": "0.0.0",
-  "description": "My first Azure REST API",
+  "description": "REST API built with Express.js exposing an Azure SQL Database via Azure App Service.",
   "main": "build/server.js",
   "scripts": {
     "start": "node build/server.js",
@@ -10,19 +10,19 @@
     "dev:run": "nodemon -r dotenv/config build/server.js",
     "dev": "concurrently npm:dev:*",
     "postinstall": "tsc",
-    "test": "cross-env NODE_ENV=test jest --setupFiles dotenv/config",
-    "test:watch": "cross-env NODE_ENV=test jest --setupFiles dotenv/config --watch"
+    "test": "cross-env NODE_ENV=test jest --setupFiles dotenv/config --forceExit --detectOpenHandles",
+    "test:watch": "cross-env NODE_ENV=test jest --setupFiles dotenv/config --watch --forceExit --detectOpenHandles"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dreadnallen/azure-movies-api.git"
+    "url": "git+https://github.com/dreadted/azure-movies-api.git"
   },
   "author": "Christofer Laurin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dreadnallen/azure-movies-api/issues"
+    "url": "https://github.com/dreadted/azure-movies-api/issues"
   },
-  "homepage": "https://github.com/dreadnallen/azure-movies-api#readme",
+  "homepage": "https://github.com/dreadted/azure-movies-api#readme",
   "dependencies": {
     "@types/connect-slashes": "0.0.32",
     "@types/cors": "^2.8.6",
